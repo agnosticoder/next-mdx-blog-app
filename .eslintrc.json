@@ -25,15 +25,16 @@
     ],
     "rules": {
         "prettier/prettier": "error",
-        // suppress errors for missing 'import React' in files
-        "react/react-in-jsx-scope": "off",
         "no-unused-vars": "warn",
+        "comma-dangle": "off",
         "no-console": "off",
         "func-names": "off",
         "object-shorthand": "off",
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "indent":"off",
-        "react/jsx-indent" : ["error", 4]
+        "react/jsx-indent" : ["error", 4],
+        "react/react-in-jsx-scope": "off"
+        // suppress errors for missing 'import React' in files
         // "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
         // "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
     }
