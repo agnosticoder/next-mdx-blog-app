@@ -1,4 +1,4 @@
-import Hello from '../components/Hello';
+import App from '../components/App';
 
 export default function Home() {
     return (
@@ -7,7 +7,7 @@ export default function Home() {
                 <h1>CSS Variable App</h1>
             </div>
             <div className="container">
-                <Hello />
+                <App />
             </div>
         </div>
     );
