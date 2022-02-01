@@ -6,3 +6,52 @@
     width: 80%;
     margin:0 auto;
 }
+
+.nav-container{
+
+}
+
+.nav{
+    display: flex;
+    justify-content: center;
+
+    li{
+        list-style: none;
+        margin: 0 1rem;
+    }
+}
+
+.nav-link{
+    text-decoration: none;
+}
+
+.playground-header{
+    background-color: $third;
+    padding: 1rem;
+    margin-bottom: 2rem;
+
+    button{
+    }
+}
+
+.page-number-wrapper{
+    display: flex;
+    margin-top: 2rem;
+}
+
+.page-number{
+    outline: none;
+    border: none;
+    margin: 0 .4rem;
+    padding: .5rem;
+    border-radius: .2rem;
+    cursor: pointer;
+    color: $forth;
+    background-color: $fifth;
+}
+
+.current-page{
+    color: $first;
+    background-color: $forth;
+}
+

@@ -1,14 +1,5 @@
-import App from '../components/App';
+const Home = () => {
+    return <div>Enter</div>;
+};
 
-export default function Home() {
-    return (
-        <div>
-            <div className="header">
-                <h1>CSS Variable App</h1>
-            </div>
-            <div className="container">
-                <App />
-            </div>
-        </div>
-    );
-}
+export default Home;
