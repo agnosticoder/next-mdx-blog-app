@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import Logout from './Home/Logout';
 
 const Layout = ({ children }) => (
     <div>
@@ -23,6 +24,19 @@ const Layout = ({ children }) => (
                         <Link href="/notes">
                             <a className="nav-link">Notes</a>
                         </Link>
+                    </li>
+                    <li>
+                        <Link href="/login">
+                            <a className="nav-link">Login</a>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/signup">
+                            <a className="nav-link">Sign up</a>
+                        </Link>
+                    </li>
+                    <li>
+                        <Logout />
                     </li>
                 </ul>
             </div>

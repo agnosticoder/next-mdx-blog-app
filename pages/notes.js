@@ -1,26 +1,41 @@
+import { PrismaClient } from '@prisma/client';
 import App from '../components/Home/App';
-import getTodos from '../lib/getTodos';
-import filterDataToMDX from '../utils/dataFilterToMDX';
+// import getTodos from '../lib/getTodos';
+import filterDataToMDX from '../lib/dataFilterToMDX';
+import { withSessionSsr } from '../lib/withSession';
 
-export default function Notes({ data }) {
+export default function Notes({ posts }) {
+    // console.log(posts);
     return (
         <div>
             <div className="container">
-                <App data={data} />
+                <App posts={posts} />
             </div>
         </div>
     );
 }
 
-export const getServerSideProps = async () => {
-    const res = await (await getTodos()).json();
-    const filteredData = await filterDataToMDX(res);
-    const data = await Promise.all(filteredData);
-    console.log({ data });
+export const getServerSideProps = withSessionSsr(async ({ req }) => {
+    const prisma = new PrismaClient();
+    const id = req.session?.user?.id;
+    let posts = [];
 
-    return {
-        props: {
-            data,
-        },
-    };
-};
+    if (id) {
+        const data = await prisma.post.findMany({
+            where: {
+                autherId: id,
+            },
+        });
+
+        if (data?.length) {
+            posts = await filterDataToMDX(data);
+            posts = await Promise.all(posts);
+            // console.log(posts);
+            return {
+                props: {
+                    posts,
+                },
+            };
+        }
+    }
+});

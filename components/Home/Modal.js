@@ -10,14 +10,15 @@ const Modal = ({ setIsOpenModal, children, todo }) => {
     const router = useRouter();
 
     const update = {
-        title: updatedTitle,
-        completed: todo.completed,
+        content: updatedTitle,
+        isDone: todo.isDone,
     };
 
     const onUpdateTodo = async (e) => {
         e.preventDefault();
-        const res = await updateTodo(update, todo.id);
+        const res = await updateTodo(update, todo.createdAt);
         setIsOpenModal(false);
+        console.log(await res.json());
         if (res.status === 200) {
             router.replace(router.asPath);
         }
@@ -25,11 +26,11 @@ const Modal = ({ setIsOpenModal, children, todo }) => {
 
     useEffect(() => {
         (async function () {
-            const res = await (await getTodo(todo.id)).json();
-            const { title } = await res;
-            setUpdatedTitle(title);
+            const res = await (await getTodo(todo.createdAt)).json();
+            const { content } = await res;
+            setUpdatedTitle(content);
         })();
-    }, [todo.id]);
+    }, [todo.createdAt]);
 
     useEffect(() => {
         inputRef.current.focus();

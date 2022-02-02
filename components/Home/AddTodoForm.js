@@ -10,9 +10,9 @@ const AddTodoForm = ({ setError }) => {
     const router = useRouter();
 
     const todo = {
-        id: Date.now().toString(),
-        title: todoTitle,
-        completed: false,
+        createdAt: Date.now().toString(),
+        content: todoTitle,
+        isDone: false,
     };
 
     const handleAddTodo = async (e) => {

@@ -2,7 +2,7 @@ import { makeStoreWithReducer } from './makeStore';
 import postTodo from '../../lib/postTodo';
 import deleteTodo from '../../lib/deleteTodo';
 import updateTodo from '../../lib/updateTodo';
-import getTodos from '../../lib/getTodos';
+// import getTodos from '../../lib/getTodos';
 import toggleTodo from '../../lib/toggleTodo';
 
 const todoActions = {
@@ -19,11 +19,11 @@ const reducer = (state, action) => {
             return [...state, action.todo];
 
         case todoActions.deleteTodo:
-            return state.filter((todo) => todo.id !== action.id);
+            return state.filter((todo) => todo.createdAt !== action.createdAt);
 
         case todoActions.updateTodo:
             return state.map((todo) => {
-                if (todo.id === action.payload.id) {
+                if (todo.createdAt === action.payload.createdAt) {
                     console.log(action.payload);
                     return {
                         ...todo,
@@ -35,7 +35,7 @@ const reducer = (state, action) => {
 
         case todoActions.toggleTodo:
             return state.map((todo) => {
-                if (todo.id === action.payload.id) {
+                if (todo.createdAt === action.payload.createdAt) {
                     return {
                         ...todo,
                         ...action.payload,
@@ -68,11 +68,14 @@ export { TodoProvider, useStore, useDispatch };
 export const useAddTodo = () => {
     const dispatch = useDispatch();
     return async (todo) => {
-        const data = await (await getTodos()).json();
-        console.log(data);
+        // const data = await (await getTodos()).json();
+        // console.log(data);
         const res = await postTodo(todo);
+        console.log(await res.json());
         if (res?.status === 201) {
             console.log('Your todo has been created');
+            //* can't do pessimistic update
+            //* can't do dispatch because mdx needs to be compiled server side
             // dispatch({ type: todoActions.addTodo, todo });
         }
         return res.status;
@@ -81,20 +84,21 @@ export const useAddTodo = () => {
 
 export const useDeleteTodo = () => {
     const dispatch = useDispatch();
-    return async (id) => {
-        const res = await deleteTodo(id);
+    return async (createdAt) => {
+        const res = await deleteTodo(createdAt);
         if (res?.status === 200) {
-            dispatch({ type: todoActions.deleteTodo, id });
+            console.log('pessimistic todo deleted');
+            dispatch({ type: todoActions.deleteTodo, createdAt });
         }
     };
 };
 
 export const useUpdateTodo = () => {
     const dispatch = useDispatch();
-    return async (todo, id) => {
-        const res = await updateTodo(todo, id);
+    return async (todo, createdAt) => {
+        const res = await updateTodo(todo, createdAt);
         if (res?.status === 200) {
-            console.log({ id, ...todo });
+            // console.log({ createdAt, ...todo });
             // dispatch({ type: todoActions.updateTodo, payload: { id, ...todo } });
         }
         return res;
@@ -104,10 +108,11 @@ export const useUpdateTodo = () => {
 // doing pessimistic toggle (opposite to optimistic toggle)
 export const useToggleTodo = () => {
     const dispatch = useDispatch();
-    return async (completed, id) => {
-        const res = await toggleTodo(completed, id);
+    return async (isDone, createdAt) => {
+        const res = await toggleTodo(isDone, createdAt);
         if (res?.status === 200) {
-            dispatch({ type: todoActions.toggleTodo, payload: { completed, id } });
+            console.log('toggled');
+            dispatch({ type: todoActions.toggleTodo, payload: { isDone, createdAt } });
         }
     };
 };

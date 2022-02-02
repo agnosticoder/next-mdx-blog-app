@@ -3,15 +3,15 @@ import TodoItems from './TodoItems';
 import AddTodoForm from './AddTodoForm';
 import { useDispatch } from '../store/todoStore';
 
-const TodoApp = ({ data }) => {
+const TodoApp = ({ posts }) => {
     const [error, setError] = useState('');
     console.log('Todo');
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch({ type: 'initial', payload: data });
-    }, [data]);
+        dispatch({ type: 'initial', payload: posts });
+    }, [posts]);
 
     return (
         <div>

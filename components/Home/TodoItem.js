@@ -9,14 +9,16 @@ const TodoItem = ({ todo }) => {
     const deleteTodo = useDeleteTodo();
     const toggleTodo = useToggleTodo();
 
+    // console.log({ todo });
+
     return (
         <div className={styles.container}>
             {/* <li>{todo.title}</li> */}
-            <div className={styles.todo}>{todo.title && <MDXRemote {...todo.title} />}</div>
+            <div className={styles.todo}>{todo.content && <MDXRemote {...todo.content} />}</div>
             {/* <li>{todo.completed ? 'Done' : 'Pending'}</li> */}
-            <li>{new Date(Number(todo.id)).toDateString()}</li>
-            <input type="checkbox" checked={todo.completed} onChange={() => toggleTodo(!todo.completed, todo.id)} />
-            <button onClick={() => deleteTodo(todo.id)} type="button">
+            <li>{new Date(Number(todo.createdAt)).toDateString()}</li>
+            <input type="checkbox" checked={todo.isDone} onChange={() => toggleTodo(!todo.isDone, todo.createdAt)} />
+            <button onClick={() => deleteTodo(todo.createdAt)} type="button">
                 Delete Todo
             </button>
             <button onClick={() => setIsOpenModal(true)} type="button">

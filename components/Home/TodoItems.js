@@ -6,7 +6,7 @@ const TodoItems = () => {
     const todos = useStore();
     // console.log(todos);
 
-    return todos.map((todo) => <TodoItem key={todo.id} todo={todo} />);
+    return todos.map((todo) => <TodoItem key={todo.createdAt} todo={todo} />);
 };
 
 export default TodoItems;

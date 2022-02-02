@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo, useReducer, useState } from 'react';
-import useGetInitialState from '../hooks/useGetInitialState';
-import useIsDB from '../hooks/useIsDB';
-import useIsLocalStorage from '../hooks/useIsLocalStorage';
+// import useGetInitialState from '../hooks/useGetInitialState';
+// import useIsDB from '../hooks/useIsDB';
+// import useIsLocalStorage from '../hooks/useIsLocalStorage';
 
 const makeStore = () => {
     const Context = createContext();
@@ -40,7 +40,7 @@ export const makeStoreWithReducer = (userReducer, initialState = [], key) => {
 
     const Provider = ({ children }) => {
         // const { isLocal } = useIsLocalStorage();
-        const { isDB, DB } = useIsDB();
+        // const { isDB, DB } = useIsDB();
         const [state, dispatch] = useReducer(reducer, initialState);
         // useGetInitialState({ isLocal, dispatch, key, initialState });
         // useGetInitialState({ isDB, DB, dispatch, key, initialState });
