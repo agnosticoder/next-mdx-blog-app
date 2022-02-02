@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '../../lib/getPrisma';
 import { withSessionRoute } from '../../lib/withSession';
-
-const prisma = new PrismaClient();
 
 const postTodo = async (req, res) => {
     const post = req.body;

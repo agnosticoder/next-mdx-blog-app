@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import Logout from './Home/Logout';
+import Logout from './Logout';
 
 const Layout = ({ children }) => (
     <div>
@@ -13,11 +13,6 @@ const Layout = ({ children }) => (
                     <li>
                         <Link href="/">
                             <a className="nav-link">Home</a>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href="/playground">
-                            <a className="nav-link">Playground</a>
                         </Link>
                     </li>
                     <li>

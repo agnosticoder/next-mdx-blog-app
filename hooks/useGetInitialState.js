@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import getTodos from '../../lib/getTodos';
+import getTodos from '../lib/getTodos';
 
 const useGetInitialState = ({ isLocal, isDB, DB, dispatch, key, initialState }) => {
     useEffect(() => {

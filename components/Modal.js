@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useUpdateTodo } from '../store/todoStore';
-import getTodo from '../../lib/getTodo';
+import getTodo from '../lib/getTodo';
 
 const Modal = ({ setIsOpenModal, children, todo }) => {
     const [updatedTitle, setUpdatedTitle] = useState('');

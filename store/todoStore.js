@@ -1,9 +1,9 @@
 import { makeStoreWithReducer } from './makeStore';
-import postTodo from '../../lib/postTodo';
-import deleteTodo from '../../lib/deleteTodo';
-import updateTodo from '../../lib/updateTodo';
+import postTodo from '../lib/postTodo';
+import deleteTodo from '../lib/deleteTodo';
+import updateTodo from '../lib/updateTodo';
 // import getTodos from '../../lib/getTodos';
-import toggleTodo from '../../lib/toggleTodo';
+import toggleTodo from '../lib/toggleTodo';
 
 const todoActions = {
     addTodo: 'addTodo',

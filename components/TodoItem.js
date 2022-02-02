@@ -2,7 +2,7 @@ import { MDXRemote } from 'next-mdx-remote';
 import { useState } from 'react';
 import { useDeleteTodo, useToggleTodo } from '../store/todoStore';
 import Modal from './Modal';
-import styles from '../../styles/modules/TodoItem.module.scss';
+import styles from '../styles/modules/TodoItem.module.scss';
 
 const TodoItem = ({ todo }) => {
     const [isOpenModal, setIsOpenModal] = useState(false);

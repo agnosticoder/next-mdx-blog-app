@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from '../../lib/getPrisma';
 
 const signup = async (req, res) => {
     const user = req.body;

@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '../../lib/getPrisma';
 import { withSessionRoute } from '../../lib/withSession';
-
-const prisma = new PrismaClient();
 
 const login = async (req, res) => {
     const { email, password } = req.body;
@@ -29,7 +27,7 @@ const login = async (req, res) => {
     }
 
     //* return null user if not found
-    res.json({ user: null, message: 'email or password incorrect' });
+    return res.json({ user: null, message: 'email or password incorrect' });
 };
 
 export default withSessionRoute(login);

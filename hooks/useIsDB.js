@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import getTodos from '../../lib/getTodos';
+import getTodos from '../lib/getTodos';
 
 const useIsDB = () => {
     const [isDB, setIsDB] = useState(false);
