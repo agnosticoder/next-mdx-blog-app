@@ -11,7 +11,7 @@ const TodoApp = ({ posts }) => {
 
     useEffect(() => {
         dispatch({ type: 'initial', payload: posts });
-    }, [posts]);
+    }, [posts, dispatch]);
 
     return (
         <div>
