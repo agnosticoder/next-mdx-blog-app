@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useAddTodo } from '../store/todoStore';
+import { useAddTodo } from './store/todoStore';
 import styles from '../styles/modules/AddTodoForm.module.scss';
 
 const AddTodoForm = ({ setError }) => {

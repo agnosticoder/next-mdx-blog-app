@@ -1,9 +1,9 @@
 import { makeStoreWithReducer } from './makeStore';
-import postTodo from '../lib/postTodo';
-import deleteTodo from '../lib/deleteTodo';
-import updateTodo from '../lib/updateTodo';
+import postTodo from '../../lib/postTodo';
+import deleteTodo from '../../lib/deleteTodo';
+import updateTodo from '../../lib/updateTodo';
 // import getTodos from '../../lib/getTodos';
-import toggleTodo from '../lib/toggleTodo';
+import toggleTodo from '../../lib/toggleTodo';
 
 const todoActions = {
     addTodo: 'addTodo',
@@ -19,7 +19,7 @@ const reducer = (state, action) => {
             return [...state, action.todo];
 
         case todoActions.deleteTodo:
-            return state.filter((todo) => todo.createdAt !== action.createdAt);
+            return state.filter((todo) => todo.id !== action.id);
 
         case todoActions.updateTodo:
             return state.map((todo) => {
@@ -84,12 +84,14 @@ export const useAddTodo = () => {
 
 export const useDeleteTodo = () => {
     const dispatch = useDispatch();
-    return async (createdAt) => {
-        const res = await deleteTodo(createdAt);
-        if (res?.status === 200) {
-            console.log('pessimistic todo deleted');
-            dispatch({ type: todoActions.deleteTodo, createdAt });
-        }
+    return async (id) => {
+        dispatch({ type: todoActions.deleteTodo, id });
+        // const res = await deleteTodo(id);
+        // console.log({res});
+        // if (res?.status === 200) {
+        //     console.log('pessimistic todo deleted');
+        //     dispatch({ type: todoActions.deleteTodo, id });
+        // }
     };
 };
 

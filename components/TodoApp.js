@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import TodoItems from './TodoItems';
 import AddTodoForm from './AddTodoForm';
-import { useDispatch } from '../store/todoStore';
+import { useDispatch } from './store/todoStore';
 
 const TodoApp = ({ posts }) => {
     const [error, setError] = useState('');

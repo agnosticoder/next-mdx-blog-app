@@ -1,4 +1,4 @@
-import { TodoProvider } from '../store/todoStore';
+import { TodoProvider } from './store/todoStore';
 import TodoApp from './TodoApp';
 // eslint-disable-next-line import/no-unresolved
 

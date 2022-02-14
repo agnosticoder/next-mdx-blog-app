@@ -1,17 +1,29 @@
 import { useState } from 'react';
 import signup from '../lib/signup';
+import Link from 'next/link';
 
 const Signup = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [user, setUser] = useState('');
+    const [message, setMessage] = useState('');
 
     const onSignup = (e) => {
         e.preventDefault();
 
+        //todo: client side password validation
         signup({ name, email, password })
-            .then((res) => console.log(res))
-            .catch((err) => console.err({ err }));
+            .then((res) => {
+                const { user = '', message = '', err = ''} = res;
+                setError(err);
+                setUser(user);
+                setMessage(message);
+            })
+            .catch((err) => {
+                console.warn({err});
+            });
     };
 
     return (
@@ -43,6 +55,16 @@ const Signup = () => {
                     />
                 </div>
                 <button type="submit">Sign Up</button>
+                {error && (
+                    <pre>
+                        {error}
+                        <Link href="/login">
+                            <a className="nav-link"> login</a>
+                        </Link>
+                    </pre>
+                )}
+                {message && <div>{message}</div>}
+                {user && <div>{JSON.stringify(user, null, 2)}</div>}
             </form>
         </div>
     );

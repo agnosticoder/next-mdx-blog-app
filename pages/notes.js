@@ -5,7 +5,7 @@ import filterDataToMDX from '../lib/dataFilterToMDX';
 import { withSessionSsr } from '../lib/withSession';
 
 export default function Notes({ posts }) {
-    // console.log(posts);
+    console.log(posts);
     return (
         <div>
             <div className="container">
@@ -28,8 +28,6 @@ export const getServerSideProps = withSessionSsr(async ({ req }) => {
 
         if (data?.length) {
             posts = await filterDataToMDX(data);
-            posts = await Promise.all(posts);
-            // console.log(posts);
             return {
                 props: {
                     posts,
