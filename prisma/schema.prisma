@@ -16,6 +16,7 @@ model User {
   email    String @unique
   password String
   Post     Post[]
+  likes    Post[] @relation(name: "likes", references: [id])
 }
 
 model Post {
@@ -25,4 +26,5 @@ model Post {
   isDone    Boolean @default(false)
   author    User    @relation(fields: [autherId], references: [id])
   autherId  Int
+  likedBy   User[]  @relation(name: "likes", references: [id])
 }

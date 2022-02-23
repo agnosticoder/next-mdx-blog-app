@@ -5,7 +5,6 @@ interface FilterToMDXProp {
 }
 
 const filterDataToMDX = async (data:FilterToMDXProp[]) => {
-    console.log(data);
     // console.log({ data });
     const filteredData = await data.map(async (todo) => {
         const filteredTodo = {

@@ -4,6 +4,7 @@ import deleteTodo from '../../lib/deleteTodo';
 import updateTodo, { UpdateTodoProps } from '../../lib/updateTodo';
 // import getTodos from '../../lib/getTodos';
 import toggleTodo, { ToggleTodoProps } from '../../lib/toggleTodo';
+import likePost, { LikePostProps } from '../../lib/likePost';
 
 const todoActions = {
     addTodo: 'addTodo',
@@ -52,7 +53,8 @@ const reducer = (state, action) => {
     }
 };
 
-const initialState = [
+//todo: do something about this shitty code
+const initialState:any[] = [
     // {
     //     id: Date.now(),
     //     title: 'This is my initial todo',
@@ -84,7 +86,7 @@ export const useAddTodo = () => {
 
 export const useDeleteTodo = () => {
     const dispatch = useDispatch();
-    return async (id) => {
+    return async (id:number) => {
         dispatch({ type: todoActions.deleteTodo, id });
         // const res = await deleteTodo(id);
         // console.log({res});
@@ -121,3 +123,21 @@ export const useToggleTodo = () => {
         }
     };
 };
+
+interface UseLikePostResult {
+    message: string;
+    onSuccess: boolean;
+    result: {
+        autherId: number;
+    };
+}
+
+export const useLikePost = () => {
+    const dispatch = useDispatch();
+    return async ({isLike, postId, userId}:LikePostProps) => {
+        const res = await likePost({isLike, postId, userId})
+        const result: UseLikePostResult =  await res?.json();
+        return {res, result};
+        console.log('todoStore', {res});
+    }
+}

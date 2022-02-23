@@ -1,34 +1,25 @@
 import { MDXRemote } from 'next-mdx-remote';
+import { FaRocket } from 'react-icons/fa';
+import DashboardPosts from '../components/DashbordPosts';
 import useDashboardPagination from '../components/hooks/useDashboardPagination';
 import useDashboardPosts from '../components/hooks/useDashboardPosts';
+import useUser from '../components/hooks/useUser';
 import filterDataToMDX from '../lib/dataFilterToMDX';
 import prisma from '../lib/getPrisma';
+import styles from '../styles/modules/Dashboard.module.scss';
 
 // const Dashboard = ({ posts }) => {
 const Dashboard = () => {
+    const { data: user, error } = useUser();
+    const hasUser = !!user?.user;
+
     //todo: this component will render the posts and also implement verical pagination
     const [dposts, onLoadMore, isLoading, hasMore] = useDashboardPosts();
-    const { setRef } = useDashboardPagination({hasMore, isLoading, onLoadMore});
-
-    console.log({ isLoading });
+    const { setRef } = useDashboardPagination({ hasMore, isLoading, onLoadMore });
 
     return (
-        <div className="container">
-            <h1>This will be our dashboard</h1>
-            {dposts.map((todo, i) => {
-                if (dposts.length === i + 1) {
-                    return (
-                        <div style={{ backgroundColor: '#999' }} ref={setRef} key={todo.createdAt}>
-                            <MDXRemote {...todo.content} />
-                        </div>
-                    );
-                }
-                return (
-                    <div style={{ fontSize: '18px' }} key={todo.createdAt}>
-                        <MDXRemote {...todo.content} />
-                    </div>
-                );
-            })}
+        <div className={styles.container}>
+            <DashboardPosts user={user} dposts={dposts} hasUser={hasUser} setRef={setRef}/>
             {isLoading && hasMore && <div>Loading...</div>}
             {!hasMore && <pre style={{ color: 'green' }}>No more posts...</pre>}
         </div>
@@ -66,7 +57,7 @@ export default Dashboard;
 
 export const getServerSideProps = async () => {
 
-    let posts = await prisma.post.findMany({
+    const posts = await prisma.post.findMany({
         select:{
             content: true,
             createdAt: true
@@ -75,8 +66,13 @@ export const getServerSideProps = async () => {
 
     prisma.$disconnect();
 
-    if(posts.length){
-        posts = await filterDataToMDX(posts);
+    if (posts.length) {
+        const postsData = await filterDataToMDX(posts);
+        return {
+            props: {
+                posts: postsData
+            },
+        };
     }
 
 
@@ -85,11 +81,4 @@ export const getServerSideProps = async () => {
     //todo: serialize mdx data with serialize function from mdx-remote
     //todo: passs it to the Dashboard component
     //todo: I need to add vertical pagination if the posts are two many
-
-
-    return {
-        props:{
-            posts
-        }
-    }
 };

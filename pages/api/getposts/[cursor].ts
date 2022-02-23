@@ -4,7 +4,6 @@ import { NextApiHandler } from "next";
 
 const getPosts:NextApiHandler = async (req, res) => {
     const { cursor } = req.query;
-    console.log({ cursor }, typeof cursor);
     try {
         let posts;
         if (cursor !== 'undefined') {
@@ -12,7 +11,9 @@ const getPosts:NextApiHandler = async (req, res) => {
                 select: {
                     content: true,
                     createdAt: true,
+                    likedBy: {select:{id: true, email: true, name: true}},
                     id: true,
+                    isDone: true
                 },
                 take: 4,
                 skip: 1,
@@ -23,7 +24,9 @@ const getPosts:NextApiHandler = async (req, res) => {
                 select: {
                     content: true,
                     createdAt: true,
+                    likedBy: {select:{id: true, email: true, name: true}},
                     id: true,
+                    isDone: true
                 },
                 take: 4,
             });

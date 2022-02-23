@@ -25,6 +25,7 @@ export const getServerSideProps:GetServerSideProps = withSessionSsr(async ({ req
             where: {
                 autherId: id,
             },
+            include:{_count: {select: {likedBy: true}}, likedBy:{select:{id: true}}}
         });
 
         if (data?.length) {

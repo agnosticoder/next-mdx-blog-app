@@ -6,7 +6,6 @@ interface ErrorHandlerProps {
 }
 
 const errorHandler = ({ err, res }: ErrorHandlerProps) => {
-    console.log('hello', {err});
     if (typeof err === 'string') {
         //* custom application error
         const is404 = err.toLowerCase().endsWith('not found');
@@ -33,6 +32,7 @@ const errorHandler = ({ err, res }: ErrorHandlerProps) => {
     //todo: In actual we log the server error to some DB where we can review these later
     //* if err is of type Error
     if (err instanceof Error) {
+        console.log({err});
         return res.status(500).json({ serverErr: err.message });
     }
     //* any other error

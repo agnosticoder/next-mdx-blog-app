@@ -11,8 +11,7 @@ const fetchPosts = async ({cursor, setIsLoading, setHasMore}: FetchPostsProps) =
     try {
         setIsLoading(true);
         const res = await fetch(`/api/getposts/${cursor}`);
-        const {posts} = await res.json();
-        console.log({posts});
+        const {posts}:{posts: Post[]} = await res.json();
         setIsLoading(false);
         if(posts.length === 0) setHasMore(false);
         if (posts) return posts;
@@ -22,10 +21,12 @@ const fetchPosts = async ({cursor, setIsLoading, setHasMore}: FetchPostsProps) =
     }
 };
 
-interface Post{
+export interface Post{
     content: MDXRemoteSerializeResult,
     createdAt: string,
-    id: number
+    id: number,
+    likedBy: {name:string, id: number, email: string}[]
+    isDone: boolean
 }
 
 const useDashboardPosts = () => {
@@ -34,14 +35,13 @@ const useDashboardPosts = () => {
     const [cursor, setCursor] = useState<number>();
     const [posts, setPosts] = useState<Post[]>([]);
 
-    console.log({posts});
-
     const onLoadMore = () => {
         setCursor(posts[posts.length - 1].id);
     }
 
     useEffect(()=> {
         fetchPosts({cursor, setIsLoading, setHasMore}).then(p => {
+            if(!p) return;
             setPosts(prev => [...prev, ...p]);
         })
     }, [cursor])

@@ -1,0 +1,44 @@
+.menu{
+    background: none;
+    border: none;
+    font-size: 2rem;
+    z-index: 0;
+}
+
+.menuContainer{
+    position: relative;
+}
+
+.optionsContainer{
+    background-color: #8CD4CB;
+    border-radius: 4px;
+    box-shadow: 2px 2px 0px 1px #000000;
+    position: absolute;
+    right: .5em;
+    top: 1.5em;
+    display: block;
+    cursor: pointer;
+    transform: scale(0);
+    transition: transform .1s ease-in-out;
+    z-index: 1;
+
+    &:focus{
+        transform: scale(100%);
+    }
+}
+
+.option{
+    font-size: inherit;
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0;
+    display: block;
+    width: 100%;
+    padding: 5px 8px;
+}
+
+.optionActive{
+    display: block;
+    background-color: #bbf3eb;
+}

@@ -36,3 +36,10 @@ yarn-error.log*
 #prisma
 /prisma/migrations
 /prisma/dev.db
+
+#typescipt
+/tsconfig.tsbuildinfo
+
+/tasks.json
+/.vscode
+
