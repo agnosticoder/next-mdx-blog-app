@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma migrate deploy && next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "doploy": "git add . && git commit -m vercel && git push upstream main"
+    "deploy": "git add . && git commit -m vercel && git push upstream main",
+    "connect:main": "pscale connect mdx-notes-app main --port 3309",
+    "connect:shadow": "pscale connect mdx-notes-app shadow --port 3310"
   },
   "dependencies": {
     "@headlessui/react": "^1.5.0",
