@@ -21,6 +21,11 @@ export interface Todo {
     likedBy: {id: number}[]
 }
 
+//Todo: This was just experiment, please remove this form here and all its references
+const Ins = ({children, ...rest}:{children: string}) => (
+    <ins style={{fontSize: 'small'}} {...rest}>{children}</ins>
+);
+
 const TodoItem = ({ ...todo }: Todo) => {
     console.log({ todo });
     const [isOpenModal, setIsOpenModal] = useState(false);

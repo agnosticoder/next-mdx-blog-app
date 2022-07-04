@@ -10,6 +10,10 @@
     color: #33322E;
     box-shadow: 2px 2px 0px 2px #000000;
     outline: 1px solid darken($color: $fifth, $amount: 10%);
+
+    table{
+        color: red;
+    }
 }
 
 .buttons{

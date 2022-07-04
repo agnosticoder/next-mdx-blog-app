@@ -1,4 +1,5 @@
 import { serialize } from 'next-mdx-remote/serialize';
+import remarkGfm from 'remark-gfm';
 
 interface FilterToMDXProp {
     content: string
@@ -9,7 +10,7 @@ const filterDataToMDX = async (data:FilterToMDXProp[]) => {
     const filteredData = await data.map(async (todo) => {
         const filteredTodo = {
             ...todo,
-            content: await serialize(todo.content),
+            content: await serialize(todo.content, {mdxOptions: {remarkPlugins:[remarkGfm]}}),
         };
         return filteredTodo;
     });

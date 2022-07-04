@@ -14,16 +14,16 @@ const todoActions = {
     initial: 'initial',
 };
 
-const reducer = (state, action) => {
+const reducer = (state:any, action:any) => {
     switch (action.type) {
         // case todoActions.addTodo:
         //     return [...state, action.todo];
 
         case todoActions.deleteTodo:
-            return state.filter((todo) => todo.id !== action.id);
+            return state.filter((todo:any) => todo.id !== action.id);
 
         case todoActions.updateTodo:
-            return state.map((todo) => {
+            return state.map((todo:any) => {
                 if (todo.createdAt === action.payload.createdAt) {
                     console.log(action.payload);
                     return {
@@ -35,7 +35,7 @@ const reducer = (state, action) => {
             });
 
         case todoActions.toggleTodo:
-            return state.map((todo) => {
+            return state.map((todo:any) => {
                 if (todo.createdAt === action.payload.createdAt) {
                     return {
                         ...todo,
