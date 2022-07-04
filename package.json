@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "migrate": "npx prisma migrate dev --name init",
+    "build": "next build && npm run migrate",
     "start": "next start",
     "lint": "next lint",
     "doploy": "git add . && git commit -m vercel && git push upstream main"
