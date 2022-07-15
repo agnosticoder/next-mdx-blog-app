@@ -1,5 +1,3 @@
-import { MDXRemote } from 'next-mdx-remote';
-import { FaRocket } from 'react-icons/fa';
 import DashboardPosts from '../components/DashbordPosts';
 import useDashboardPagination from '../components/hooks/useDashboardPagination';
 import useDashboardPosts from '../components/hooks/useDashboardPosts';
