@@ -1,6 +1,8 @@
 import '../styles/styles.scss';
 import Layout from '../components/Layout';
 import { AppProps } from 'next/app';
+import { withTRPC } from '@trpc/next';
+import { AppRouter } from '../server/routers/_app';
 
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -14,4 +16,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     );
 }
 
-export default MyApp;
+export default withTRPC<AppRouter>({
+    config: ({ctx}) => {
+        const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/trpc` : 'http://localhost:3000/api/trpc';
+
+        return {
+            url,
+        }
+    },
+    ssr: true,
+})(MyApp);
