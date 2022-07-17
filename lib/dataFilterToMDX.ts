@@ -1,9 +1,10 @@
 import { serialize } from 'next-mdx-remote/serialize';
 import remarkGfm from 'remark-gfm';
+import { Post } from '../components/hooks/useDashboardPosts';
 
-interface FilterToMDXProp {
-    content: string
-}
+type FilterToMDXProp = {
+    content: string;
+} & Pick<Post, 'createdAt' | 'id' | 'isDone' | 'likedBy'>
 
 const filterDataToMDX = async (data:FilterToMDXProp[]) => {
     // console.log({ data });

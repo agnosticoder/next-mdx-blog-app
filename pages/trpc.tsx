@@ -1,7 +1,7 @@
 import {trpc} from '../utils/trpc';
 
 const Trpc = () => {
-    const {data} = trpc.useQuery(['post.dashboard', {}]);
+    const {data} = trpc.useQuery(['hello']);
 
     console.log('data', data);
 

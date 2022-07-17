@@ -1,5 +1,6 @@
 import { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import client from '../../utils/client';
 
 interface FetchPostsProps{
     cursor?: number,
@@ -10,8 +11,9 @@ interface FetchPostsProps{
 const fetchPosts = async ({cursor, setIsLoading, setHasMore}: FetchPostsProps) => {
     try {
         setIsLoading(true);
-        const res = await fetch(`/api/getposts/${cursor}`);
-        const {posts}:{posts: Post[]} = await res.json();
+        const posts = await client.query('post.dashboard', {cursor})
+        // const res = await fetch(`/api/getposts/${cursor}`);
+        // const {posts}:{posts: Post[]} = await res.json();
         setIsLoading(false);
         if(posts.length === 0) setHasMore(false);
         if (posts) return posts;
