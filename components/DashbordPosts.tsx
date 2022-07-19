@@ -8,7 +8,7 @@ import LikeButton from "./LikeButton";
 
 interface DashboardPostsProps {
     dposts: Post[],
-    user: {id: number} | undefined,
+    user: {id: string} | undefined,
     hasUser: boolean,
     setRef: Dispatch<SetStateAction<HTMLDivElement | null | undefined>>
 }
@@ -20,7 +20,7 @@ const DashboardPosts = ({ user, hasUser, dposts, setRef }: DashboardPostsProps) 
             {dposts.map((todo, i) => {
                 if (dposts.length === i + 1) {
                     return (
-                        <div className={styles.container} ref={setRef} key={todo.createdAt}>
+                        <div className={styles.container} ref={setRef} key={todo.id}>
                             <MDXRemote {...todo.content} />
                             {hasUser && (
                             <span className={styles.buttons}>
@@ -36,7 +36,7 @@ const DashboardPosts = ({ user, hasUser, dposts, setRef }: DashboardPostsProps) 
                     );
                 }
                 return (
-                    <div className={styles.container} key={todo.createdAt}>
+                    <div className={styles.container} key={todo.id}>
                         <MDXRemote {...todo.content} />
                         {hasUser && (
                             <span className={styles.buttons}>

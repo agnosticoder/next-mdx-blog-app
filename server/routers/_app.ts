@@ -13,15 +13,6 @@ const appRouter = createRouter()
 
         return next()
     })
-    .query('hello', {
-        resolve: async ({ ctx }) => {
-            ctx.session.user = {
-                id: 1,
-            }
-            await ctx.session.save();
-            return ctx;
-        },
-    })
     .merge('post.', postRouter)
     .merge('user.', userRouter);
 

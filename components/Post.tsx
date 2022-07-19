@@ -8,13 +8,13 @@ import LikeButton from './LikeButton';
 import { trpc } from '../utils/trpc';
 
 export interface Todo {
-    autherId: number;
+    autherId: string;
     content: MDXRemoteSerializeResult;
-    createdAt: string;
-    id: number;
+    createdAt: Date;
+    id: string;
     isDone: boolean;
     _count: {likedBy: number}
-    likedBy: {id: number}[]
+    likedBy: {id: string}[]
 }
 
 //Todo: This was just experiment, please remove this form here and all its references
@@ -22,7 +22,7 @@ const Ins = ({children, ...rest}:{children: string}) => (
     <ins style={{fontSize: 'small'}} {...rest}>{children}</ins>
 );
 
-const TodoItem = ({ ...todo }: Todo) => {
+const Post = ({ ...todo }: Todo) => {
     console.log({ todo });
     const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -45,7 +45,7 @@ const TodoItem = ({ ...todo }: Todo) => {
     //todo: when user clicks the notes then show the full note in a different dynamic path page
     //? can show full note in model as well like google does with google keep
 
-    const onDeleteTodo = async (id: number) => {
+    const onDeleteTodo = async (id: string) => {
         deletePost({postId: id});
         //todo: create error and message context and wrap the entire app
         //todo: dispatch action providing error or message
@@ -75,7 +75,7 @@ const TodoItem = ({ ...todo }: Todo) => {
                             id={String(id)}
                             type="checkbox"
                             checked={isDone}
-                            onChange={() => togglePost({ createdAt, isDone: !isDone })}
+                            onChange={() => togglePost({ postId:todo.id, isDone: !isDone })}
                         />
                         <label
                             className={styles.publish}
@@ -96,11 +96,6 @@ const TodoItem = ({ ...todo }: Todo) => {
                     <div className={styles.date}>
                         <li>{new Date(Number(createdAt)).toDateString()}</li>
                     </div>
-                    {/* {isOpenModal && (
-                        <Modal todo={todo} setIsOpenModal={setIsOpenModal}>
-                            Modal Text
-                        </Modal>
-                    )} */}
                     <EditNoteModal todo={todo} isOpenModal={isOpenModal} onClose={() => setIsOpenModal(false)} />
                 </div>
             )}
@@ -108,4 +103,4 @@ const TodoItem = ({ ...todo }: Todo) => {
     );
 };
 
-export default TodoItem;
+export default Post;

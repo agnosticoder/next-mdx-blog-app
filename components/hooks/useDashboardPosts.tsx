@@ -3,7 +3,7 @@ import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import client from '../../utils/client';
 
 interface FetchPostsProps{
-    cursor?: number,
+    cursor?: string,
     setIsLoading: Dispatch<SetStateAction<boolean>>,
     setHasMore: Dispatch<SetStateAction<boolean>>
 }
@@ -23,20 +23,20 @@ const fetchPosts = async ({cursor, setIsLoading, setHasMore}: FetchPostsProps) =
 
 export interface Post{
     content: MDXRemoteSerializeResult,
-    createdAt: string,
-    id: number,
-    likedBy: {name:string, id: number, email: string}[]
+    createdAt: Date,
+    id: string,
+    likedBy: {name:string, id: string, email: string}[]
     isDone: boolean
 }
 
 const useDashboardPosts = () => {
     const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
-    const [cursor, setCursor] = useState<number>();
+    const [cursor, setCursor] = useState<string>();
     const [posts, setPosts] = useState<Post[]>([]);
 
     const onLoadMore = () => {
-        setCursor(posts[posts.length - 1].id);
+        setCursor(String(posts[posts.length - 1].id));
     }
 
     useEffect(()=> {

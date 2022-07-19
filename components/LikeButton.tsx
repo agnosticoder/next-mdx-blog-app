@@ -5,9 +5,9 @@ import styles from '../styles/modules/LikeButton.module.scss';
 import { trpc } from '../utils/trpc';
 
 interface LikeButtonProps {
-    userId: number | undefined;
-    postId: number;
-    likedByIds: number[];
+    userId: string | undefined;
+    postId: string;
+    likedByIds: string[];
     totalLikes: number;
 }
 

@@ -12,7 +12,6 @@ const postRouter = createRouter()
         },
         input: z.object({
             content: z.string(),
-            createdAt: z.string(),
             isDone: z.boolean(),
         }),
         resolve: async ({ input, ctx }) => {
@@ -33,7 +32,7 @@ const postRouter = createRouter()
     // read
     .query('dashboard', {
         input: z.object({
-            cursor: z.number().optional(),
+            cursor: z.string().optional(),
         }),
         resolve: async ({ input }) => {
             const cursor = input.cursor;
@@ -49,7 +48,7 @@ const postRouter = createRouter()
                     },
                     take: 4,
                     skip: 1,
-                    cursor: { id: Number(cursor) },
+                    cursor: { id: cursor},
                 });
                 return await filterDataToMDX<typeof posts>(posts);
             } else {
@@ -85,15 +84,15 @@ const postRouter = createRouter()
     })
     .query('getPost', {
         input: z.object({
-            createdAt: z.string(),
+            postId: z.string(),
         }),
         resolve: async ({ctx, input }) => {
             const id = ctx.session.user?.id;
-            const {createdAt} = input;
-        if (id && createdAt && typeof createdAt === 'string') {
-            const post = await prisma.post.findFirst({
+            const {postId} = input;
+        if (id && postId && typeof postId === 'string') {
+            const post = await prisma.post.findUnique({
                 where: {
-                    createdAt,
+                    id: postId,
                 },
             });
             if (post && id === post.autherId) {
@@ -112,14 +111,14 @@ const postRouter = createRouter()
                 content: z.string(),
                 isDone: z.boolean(),
             }),
-            createdAt: z.string(),
+            postId: z.string(),
         }),
         resolve: async ({ input, ctx }) => {
-            const {createdAt, update} = input;
+            const {postId, update} = input;
             //Todo: Change it to find by id
-            const post = await prisma.post.findFirst({
+            const post = await prisma.post.findUnique({
                 where: {
-                    createdAt,
+                    id: postId,
                 },
             });
 
@@ -140,14 +139,14 @@ const postRouter = createRouter()
             hasAuth: true,
         },
         input: z.object({
-            createdAt: z.string(),
+            postId: z.string(),
             isDone: z.boolean(),
         }),
         resolve: async ({ input, ctx }) => {
-            const {createdAt, isDone} = input;
-            const post = await prisma.post.findFirst({
+            const {postId, isDone} = input;
+            const post = await prisma.post.findUnique({
                 where: {
-                    createdAt,
+                    id: postId,
                 },
             });
 
@@ -168,8 +167,8 @@ const postRouter = createRouter()
         },
         input: z.object({
             isLike: z.boolean(),
-            postId: z.number(),
-            userId: z.number().or(z.undefined()),
+            postId: z.string(),
+            userId: z.string().or(z.undefined()),
         }),
         resolve: async ({ input, ctx }) => {
         const {isLike, postId, userId} = input;
@@ -222,7 +221,7 @@ const postRouter = createRouter()
             hasAuth: true,
         },
         input: z.object({
-            postId: z.number(),
+            postId: z.string(),
         }),
         resolve: async ({ input, ctx }) => {
             const userId = ctx.session.user?.id;

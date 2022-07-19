@@ -1,28 +1,17 @@
-import { useEffect, useState } from 'react';
-import TodoItems from './TodoItems';
+import { useState } from 'react';
 import AddTodoForm from './AddTodoForm';
-import { useDispatch } from './store/todoStore';
-import { Todo } from './TodoItem';
+import Post from './Post';
 import { trpc } from '../utils/trpc';
 
 const TodoApp = () => {
     const [error, setError] = useState('');
-    const {data: posts} = trpc.useQuery(['post.userPosts']);
-    console.log('posts', posts);
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        if (posts) {
-            dispatch({ type: 'initial', payload: posts });
-        }
-    }, [posts, dispatch]);
+    const {data: todos} = trpc.useQuery(['post.userPosts']);
 
     return (
         <div>
             {error && <h3>{error}</h3>}
             <AddTodoForm setError={setError} />
-            <TodoItems />
+            {todos?.map((todo) => <Post key={todo.id} {...todo} />)}
         </div>
     );
 };

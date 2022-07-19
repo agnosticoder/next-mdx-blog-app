@@ -3,8 +3,8 @@ import { Dispatch, SetStateAction } from 'react';
 import styles from '../styles/modules/NotesDropdown.module.scss';
 
 interface NotesDropdownProps{
-    id: number,
-    onDeleteTodo: (id: number) => Promise<void>,
+    id: string,
+    onDeleteTodo: (id: string) => Promise<void>,
     setIsOpenModel: Dispatch<SetStateAction<boolean>>
 }
 
@@ -19,7 +19,7 @@ const NotesDropdown = ({ id, onDeleteTodo, setIsOpenModel }: NotesDropdownProps)
                 <Menu.Items className={styles.optionsContainer}>
                     <div>
                         <Menu.Item>
-                            {({ active }) => (
+                            {({ active }: { active: boolean }) => (
                                 <button
                                     onClick={() => setIsOpenModel(true)}
                                     className={`${active && styles.optionActive} ${styles.option}`}
@@ -31,7 +31,7 @@ const NotesDropdown = ({ id, onDeleteTodo, setIsOpenModel }: NotesDropdownProps)
                     </div>
                     <div>
                         <Menu.Item>
-                            {({ active }) => (
+                            {({ active }: { active: boolean }) => (
                                 <button
                                     onClick={() => onDeleteTodo(id).catch((e) => console.warn(e))}
                                     className={`${active && styles.optionActive} ${styles.option}`}

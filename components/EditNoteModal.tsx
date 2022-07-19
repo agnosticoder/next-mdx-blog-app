@@ -1,7 +1,7 @@
 import {Dialog} from '@headlessui/react';
 import { MouseEvent, useEffect, useRef, useState } from 'react';
 import styles from '../styles/modules/EditNoteModal.module.scss';
-import { Todo } from './TodoItem';
+import { Todo } from './Post';
 import { trpc } from '../utils/trpc';
 import client from '../utils/client';
 
@@ -27,13 +27,13 @@ const EditNoteModal = ({ isOpenModal, onClose, todo }: EditNoteModalProps) => {
 
     const onUpdateNote = async (e: MouseEvent) => {
         e.preventDefault();
-        mutate({update, createdAt});
+        mutate({update, postId: todo.id});
     };
 
     useEffect(() => {
         (async function () {
             // const res = await getTodo(todo.createdAt);
-            const post = await client.query('post.getPost', { createdAt });
+            const post = await client.query('post.getPost', { postId: todo.id });
             if (!post) return;
             const { content } = post;
             setNoteUpdate(content);
