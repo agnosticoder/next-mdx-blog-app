@@ -13,20 +13,23 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String @unique
-  password String
-  Post     Post[]
-  likes    Post[] @relation(name: "likes")
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  posts     Post[]
+  likes     Post[]   @relation(name: "likes")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Post {
-  id        Int     @id @default(autoincrement())
+  id        String   @id @default(uuid())
   content   String
-  createdAt String
-  isDone    Boolean @default(false)
-  author    User    @relation(fields: [autherId], references: [id])
-  autherId  Int
-  likedBy   User[]  @relation(name: "likes")
+  isDone    Boolean  @default(false)
+  author    User     @relation(fields: [autherId], references: [id])
+  autherId  String
+  likedBy   User[]   @relation(name: "likes")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
