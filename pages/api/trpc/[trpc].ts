@@ -20,4 +20,4 @@ const withCors = (handler:NextApiHandler) => {
     }
 }
 
-export default withSessionRoute(withCors(trpcNext.createNextApiHandler({ router: appRouter, createContext})));
+export default withCors(withSessionRoute(trpcNext.createNextApiHandler({ router: appRouter, createContext})));

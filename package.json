@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "deploy": "git add . && git commit -m vercel && git push upstream main",
-    "connect": "pscale connect mdx-notes-app initial-setup --port 3309"
+    "connect": "pscale connect mdx-notes-app main --port 3309"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.6",
