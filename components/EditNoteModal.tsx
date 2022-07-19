@@ -1,9 +1,9 @@
 import {Dialog} from '@headlessui/react';
 import { MouseEvent, useEffect, useRef, useState } from 'react';
-import getTodo from '../lib/getTodo';
 import styles from '../styles/modules/EditNoteModal.module.scss';
 import { Todo } from './TodoItem';
 import { trpc } from '../utils/trpc';
+import client from '../utils/client';
 
 interface EditNoteModalProps {
     isOpenModal: boolean,
@@ -32,12 +32,13 @@ const EditNoteModal = ({ isOpenModal, onClose, todo }: EditNoteModalProps) => {
 
     useEffect(() => {
         (async function () {
-            const res = await getTodo(todo.createdAt);
-            if (!res) return;
-            const { content } = res;
+            // const res = await getTodo(todo.createdAt);
+            const post = await client.query('post.getPost', { createdAt });
+            if (!post) return;
+            const { content } = post;
             setNoteUpdate(content);
         })();
-    }, [todo.createdAt]);
+    }, [createdAt]);
 
     //todo: scroll to the end when focus, research how this works?
     //todo: put the cursor to the end word

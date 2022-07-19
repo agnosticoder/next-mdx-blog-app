@@ -1,10 +1,5 @@
 import { makeStoreWithReducer } from './makeStore';
-import postTodo, { PostTodoProps } from '../../lib/postTodo';
-import deleteTodo from '../../lib/deleteTodo';
-import updateTodo, { UpdateTodoProps } from '../../lib/updateTodo';
 // import getTodos from '../../lib/getTodos';
-import toggleTodo, { ToggleTodoProps } from '../../lib/toggleTodo';
-import likePost, { LikePostProps } from '../../lib/likePost';
 
 const todoActions = {
     addTodo: 'addTodo',

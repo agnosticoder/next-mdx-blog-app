@@ -83,6 +83,25 @@ const postRouter = createRouter()
             return await filterDataToMDX<typeof posts>(posts);
         },
     })
+    .query('getPost', {
+        input: z.object({
+            createdAt: z.string(),
+        }),
+        resolve: async ({ctx, input }) => {
+            const id = ctx.session.user?.id;
+            const {createdAt} = input;
+        if (id && createdAt && typeof createdAt === 'string') {
+            const post = await prisma.post.findFirst({
+                where: {
+                    createdAt,
+                },
+            });
+            if (post && id === post.autherId) {
+                return post;
+            }
+        }
+        }
+    })
     // update
     .mutation('update', {
         meta: {
