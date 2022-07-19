@@ -6,10 +6,8 @@ import type { Todo } from './TodoItem';
 const App = () => {
     return (
         <div>
-            <h1>Todo App</h1>
             <TodoProvider>
                 <TodoApp/>
-                {/* <Test /> */}
             </TodoProvider>
         </div>
     );

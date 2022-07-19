@@ -1,13 +1,17 @@
 import { Dispatch, MouseEvent, SetStateAction, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useAddTodo } from './store/todoStore';
 import styles from '../styles/modules/AddTodoForm.module.scss';
+import { trpc } from '../utils/trpc';
 
-const AddTodoForm = ({ setError }:{setError: Dispatch<SetStateAction<string>>}) => {
-    console.log('AddTodoItem');
+const AddTodoForm = ({ setError }: { setError: Dispatch<SetStateAction<string>> }) => {
     const [todoTitle, setTodoTitle] = useState('');
-    const addTodo = useAddTodo();
-    const router = useRouter();
+    const utils = trpc.useContext();
+    const { mutate } = trpc.useMutation(['post.create'], {
+        onSuccess: () => {
+            setTodoTitle('');
+            setError('');
+            utils.invalidateQueries(['post.userPosts']);
+        },
+    });
 
     const todo = {
         createdAt: Date.now().toString(),
@@ -15,18 +19,13 @@ const AddTodoForm = ({ setError }:{setError: Dispatch<SetStateAction<string>>}) 
         isDone: false,
     };
 
-    const handleAddTodo = async (e:MouseEvent) => {
+    const handleAddTodo = async (e: MouseEvent) => {
         e.preventDefault();
         if (!todoTitle) {
             setError('Field Cannot be empty');
             return;
         }
-        const status = await addTodo(todo);
-        if (status === 201) {
-            router.replace(router.asPath);
-            setTodoTitle('');
-            setError('');
-        }
+        mutate(todo);
     };
 
     return (

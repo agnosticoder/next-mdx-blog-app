@@ -43,11 +43,11 @@ const postRouter = createRouter()
         },
     })
     .query('userPosts', {
+        meta: {
+            hasAuth: true,
+        },
         resolve: async ({ ctx }) => {
             const id = ctx.session.user?.id;
-            console.log(ctx.session);
-            console.log('trigger userPosts');
-            if (!id) throw new TRPCError({ code: 'UNAUTHORIZED', message: 'You are not logged in' });
             const posts = await prisma.post.findMany({
                 where: {
                     autherId: id,
@@ -57,6 +57,29 @@ const postRouter = createRouter()
 
             return await filterDataToMDX<typeof posts>(posts);
         },
+    }).mutation('create', {
+        meta: {
+            hasAuth: true
+        },
+        input: z.object({
+            content: z.string(),
+            createdAt: z.string(),
+            isDone: z.boolean(),
+        }),
+        resolve: async ({ input, ctx }) => {
+            const post = input;
+            const id = ctx.session.user?.id;
+            return await prisma.post.create({
+                data: {
+                    ...post,
+                    author: {
+                        connect: {
+                            id
+                        },
+                    },
+                },
+            });
+        }
     });
 
 
