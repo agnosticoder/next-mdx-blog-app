@@ -1,21 +1,63 @@
+import { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import remarkGfm from 'remark-gfm';
-import { Post } from '../components/hooks/useDashboardPosts';
 
-type FilterToMDXProp = {
+type SerializeToMDXProp = {
     content: string;
-} & Pick<Post, 'createdAt' | 'id' | 'isDone' | 'likedBy'>
+    //* can be any arbitrary data
+} 
 
-const filterDataToMDX = async (data:FilterToMDXProp[]) => {
-    // console.log({ data });
-    const filteredData = await data.map(async (todo) => {
-        const filteredTodo = {
-            ...todo,
-            content: await serialize(todo.content, {mdxOptions: {remarkPlugins:[remarkGfm]}}),
+const serializeDataToMDX = async (data:SerializeToMDXProp[]) => {
+    const serializedData = await data.map(async (post) => {
+        const serializedPost = {
+            ...post,
+            content: await serialize(post.content, {mdxOptions: {remarkPlugins:[remarkGfm]}}),
         };
-        return filteredTodo;
+        return serializedPost;
     });
-    return await Promise.all(filteredData);
+    
+    //* I want to return serialzedContent with any arbitrary data passed along with it
+    return await Promise.all(serializedData);
 };
 
-export default filterDataToMDX;
+export default serializeDataToMDX;
+
+
+
+
+
+ interface Post{
+    content: string,
+    createdAt: string,
+    id: number,
+    likedBy: {name:string, id: number, email: string}[]
+    isDone: boolean
+}
+
+ interface PostSerilized{
+    content: MDXRemoteSerializeResult,
+    createdAt: string,
+    id: number,
+    likedBy: {name:string, id: number, email: string}[]
+    isDone: boolean
+}
+
+interface Post2 {
+    autherId: number;
+    content: string;
+    createdAt: string;
+    id: number;
+    isDone: boolean;
+    _count: {likedBy: number}
+    likedBy: {id: number}[]
+}
+
+interface PostSerilized2 {
+    autherId: number;
+    content: MDXRemoteSerializeResult;
+    createdAt: string;
+    id: number;
+    isDone: boolean;
+    _count: {likedBy: number}
+    likedBy: {id: number}[]
+}

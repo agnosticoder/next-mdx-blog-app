@@ -20,7 +20,7 @@ const Layout = ({ children }: {children: ReactElement}) => (
                     </li>
                     <li>
                         <Link href="/notes">
-                            <a className="nav-link">Notes</a>
+                            <a className="nav-link">Posts</a>
                         </Link>
                     </li>
                     <li>
@@ -38,7 +38,7 @@ const Layout = ({ children }: {children: ReactElement}) => (
                     </li>
                 </ul>
             </div>
-            <h1>CSS Variable App</h1>
+            <h1>MDX Blogging Platform</h1>
         </div>
         <main>{children}</main>
     </div>

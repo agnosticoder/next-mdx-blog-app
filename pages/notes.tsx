@@ -7,6 +7,7 @@ import { Todo } from '../components/TodoItem';
 import { GetServerSideProps } from 'next';
 
 export default function Notes({ posts }:{posts: Todo[]}) {
+    console.log('posts', posts);
     return (
         <div>
             <div className="container">
