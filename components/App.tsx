@@ -3,12 +3,12 @@ import TodoApp from './TodoApp';
 import type { Todo } from './TodoItem';
 // eslint-disable-next-line import/no-unresolved
 
-const App = ({ posts }: {posts: Todo[]}) => {
+const App = () => {
     return (
         <div>
             <h1>Todo App</h1>
             <TodoProvider>
-                <TodoApp posts={posts}/>
+                <TodoApp/>
                 {/* <Test /> */}
             </TodoProvider>
         </div>

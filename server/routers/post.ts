@@ -26,7 +26,7 @@ const postRouter = createRouter()
                     skip: 1,
                     cursor: { id: Number(cursor) },
                 });
-                return await filterDataToMDX(posts);
+                return await filterDataToMDX<typeof posts>(posts);
             } else {
                 const posts = await prisma.post.findMany({
                     select: {
@@ -38,18 +38,16 @@ const postRouter = createRouter()
                     },
                     take: 4,
                 });
-                return await filterDataToMDX(posts);
+                return await filterDataToMDX<typeof posts>(posts);
             }
-            // const serializedData = await filterDataToMDX(posts);
-            // if (serializedData) return res.status(200).send({ posts: serializedData });
-            // return res.status(400).send({ err: 'Something went wrong' });
         },
     })
     .query('userPosts', {
         resolve: async ({ ctx }) => {
             const id = ctx.session.user?.id;
+            console.log(ctx.session);
+            console.log('trigger userPosts');
             if (!id) throw new TRPCError({ code: 'UNAUTHORIZED', message: 'You are not logged in' });
-
             const posts = await prisma.post.findMany({
                 where: {
                     autherId: id,
@@ -57,12 +55,7 @@ const postRouter = createRouter()
                 include: { _count: { select: { likedBy: true } }, likedBy: { select: { id: true } } },
             });
 
-            const serializedPosts = await filterDataToMDX(posts);
-            return {
-                props: {
-                    posts,
-                },
-            };
+            return await filterDataToMDX<typeof posts>(posts);
         },
     });
 

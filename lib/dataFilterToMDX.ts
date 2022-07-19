@@ -2,12 +2,13 @@ import { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import remarkGfm from 'remark-gfm';
 
-type SerializeToMDXProp = {
-    content: string;
-    //* can be any arbitrary data
-} 
+type Unarray<T> = T extends Array<infer U> ? U : T;
 
-const serializeDataToMDX = async (data:SerializeToMDXProp[]) => {
+type SerializeToMDXProp<T> = {
+    content: string;
+} & Pick<Unarray<T>, Exclude<keyof Unarray<T>, 'content'>>;
+
+const serializeDataToMDX = async <T>(data:SerializeToMDXProp<T>[]) => {
     const serializedData = await data.map(async (post) => {
         const serializedPost = {
             ...post,
@@ -21,43 +22,3 @@ const serializeDataToMDX = async (data:SerializeToMDXProp[]) => {
 };
 
 export default serializeDataToMDX;
-
-
-
-
-
- interface Post{
-    content: string,
-    createdAt: string,
-    id: number,
-    likedBy: {name:string, id: number, email: string}[]
-    isDone: boolean
-}
-
- interface PostSerilized{
-    content: MDXRemoteSerializeResult,
-    createdAt: string,
-    id: number,
-    likedBy: {name:string, id: number, email: string}[]
-    isDone: boolean
-}
-
-interface Post2 {
-    autherId: number;
-    content: string;
-    createdAt: string;
-    id: number;
-    isDone: boolean;
-    _count: {likedBy: number}
-    likedBy: {id: number}[]
-}
-
-interface PostSerilized2 {
-    autherId: number;
-    content: MDXRemoteSerializeResult;
-    createdAt: string;
-    id: number;
-    isDone: boolean;
-    _count: {likedBy: number}
-    likedBy: {id: number}[]
-}

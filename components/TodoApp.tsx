@@ -3,15 +3,19 @@ import TodoItems from './TodoItems';
 import AddTodoForm from './AddTodoForm';
 import { useDispatch } from './store/todoStore';
 import { Todo } from './TodoItem';
+import { trpc } from '../utils/trpc';
 
-const TodoApp = ({ posts }: {posts: Todo[]}) => {
+const TodoApp = () => {
     const [error, setError] = useState('');
-    console.log('Todo');
+    const {data: posts} = trpc.useQuery(['post.userPosts']);
+    console.log('posts', posts);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch({ type: 'initial', payload: posts });
+        if (posts) {
+            dispatch({ type: 'initial', payload: posts });
+        }
     }, [posts, dispatch]);
 
     return (

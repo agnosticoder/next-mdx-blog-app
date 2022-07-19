@@ -1,53 +1,12 @@
-import prisma from '../lib/getPrisma';
 import App from '../components/App';
-// import getTodos from '../lib/getTodos';
-import filterDataToMDX from '../lib/dataFilterToMDX';
-import { withSessionSsr } from '../lib/withSession';
-import { Todo } from '../components/TodoItem';
-import { GetServerSideProps } from 'next';
+import ClientOnly from '../components/ClientOnly';
 
-export default function Notes({ posts }:{posts: Todo[]}) {
-    console.log('posts', posts);
+export default function Notes() {
     return (
-        <div>
+        <ClientOnly>
             <div className="container">
-                <App posts={posts} />
+                <App />
             </div>
-        </div>
+        </ClientOnly>
     );
 }
-
-export const getServerSideProps:GetServerSideProps = withSessionSsr(async ({ req }) => {
-    const id = req.session?.user?.id;
-    let posts = [];
-
-    if (id) {
-        const data = await prisma.post.findMany({
-            where: {
-                autherId: id,
-            },
-            include:{_count: {select: {likedBy: true}}, likedBy:{select:{id: true}}}
-        });
-
-        if (data?.length) {
-            posts = await filterDataToMDX(data);
-            return {
-                props: {
-                    posts,
-                },
-            };
-        }
-
-        prisma.$disconnect();
-
-        return {
-            props: {
-                posts: data,
-            },
-        };
-    }
-
-    return {
-        notFound: true,
-    };
-});
