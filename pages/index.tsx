@@ -15,6 +15,8 @@ const Dashboard = () => {
     const [dposts, onLoadMore, isLoading, hasMore] = useDashboardPosts();
     const { setRef } = useDashboardPagination({ hasMore, isLoading, onLoadMore });
 
+    console.log('index', dposts);
+
     return (
         <div className={styles.container}>
             <DashboardPosts user={user} dposts={dposts} hasUser={hasUser} setRef={setRef}/>

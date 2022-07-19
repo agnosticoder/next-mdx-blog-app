@@ -42,6 +42,7 @@ const useDashboardPosts = () => {
     useEffect(()=> {
         fetchPosts({cursor, setIsLoading, setHasMore}).then(p => {
             if(!p) return;
+            console.log('p', p);
             setPosts(prev => [...prev, ...p]);
         })
     }, [cursor])
