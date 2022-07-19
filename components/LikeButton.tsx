@@ -2,7 +2,7 @@ import { Switch } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 import { RiRocket2Fill } from 'react-icons/ri';
 import styles from '../styles/modules/LikeButton.module.scss';
-import { useLikePost } from './store/todoStore';
+import { trpc } from '../utils/trpc';
 
 interface LikeButtonProps {
     userId: number | undefined;
@@ -14,7 +14,12 @@ interface LikeButtonProps {
 const LikeButton = ({ userId, postId, likedByIds, totalLikes }: LikeButtonProps) => {
     const [isLike, setIsLike] = useState(false);
     const [likesCount, setLikesCount] = useState(0);
-    const likePost = useLikePost();
+    const utils = trpc.useContext();
+    const {mutateAsync} = trpc.useMutation(['post.like'], {
+        onSuccess: () => {
+            utils.invalidateQueries(['post.userPosts']);
+        }
+    });
 
     //* set isLike to true if likedByIds contains userId
     useEffect(() => {
@@ -27,17 +32,20 @@ const LikeButton = ({ userId, postId, likedByIds, totalLikes }: LikeButtonProps)
     }, []);
 
     const onLike = async () => {
-        const { res, result } = await likePost({ isLike: !isLike, postId, userId });
-        if (res?.ok && result?.onSuccess) {
-            if (isLike) {
-                setIsLike(!isLike);
-                setLikesCount(likesCount - 1);
-            } else {
-                setIsLike(!isLike);
-                setLikesCount(likesCount + 1);
-            }
-            console.log({ res }, result.message);
+        // const { res, result } = await likePost({ isLike: !isLike, postId, userId });
+        //Todo: fix the following shit
+        const post = await mutateAsync({ isLike: !isLike, postId, userId });
+        if(!post) return;
+        if (isLike) {
+            setIsLike(!isLike);
+            setLikesCount(likesCount - 1);
+        } else {
+            setIsLike(!isLike);
+            setLikesCount(likesCount + 1);
         }
+        // if (res?.ok && result?.onSuccess) {
+        //     console.log({ res }, result.message);
+        // }
     };
 
     // useEffect(() => {

@@ -1,10 +1,9 @@
-import {Dialog, Transition} from '@headlessui/react';
+import {Dialog} from '@headlessui/react';
 import { MouseEvent, useEffect, useRef, useState } from 'react';
 import getTodo from '../lib/getTodo';
 import styles from '../styles/modules/EditNoteModal.module.scss';
-import { useUpdateTodo } from './store/todoStore';
 import { Todo } from './TodoItem';
-import {useRouter} from 'next/router';
+import { trpc } from '../utils/trpc';
 
 interface EditNoteModalProps {
     isOpenModal: boolean,
@@ -15,20 +14,20 @@ interface EditNoteModalProps {
 const EditNoteModal = ({ isOpenModal, onClose, todo }: EditNoteModalProps) => {
     const [noteUpdate, setNoteUpdate] = useState<string>('');
     const ref = useRef<HTMLTextAreaElement>(null);
-    const updateTodo = useUpdateTodo();
-    const router = useRouter();
+    const utils = trpc.useContext();
+    const { mutate } = trpc.useMutation(['post.update'], {
+        onSuccess: () => {
+            utils.invalidateQueries(['post.userPosts']);
+            onClose();
+        }
+    });
 
     const update = { isDone: todo.isDone, content: noteUpdate };
     const { createdAt } = todo;
 
     const onUpdateNote = async (e: MouseEvent) => {
         e.preventDefault();
-        const res = await updateTodo({ update, createdAt });
-        console.log(await res?.json());
-        if (res?.status === 200) {
-            router.replace(router.asPath);
-        }
-        onClose();
+        mutate({update, createdAt});
     };
 
     useEffect(() => {
@@ -53,25 +52,25 @@ const EditNoteModal = ({ isOpenModal, onClose, todo }: EditNoteModalProps) => {
     return (
         <div>
             {/* //todo: add animation using any libarary */}
-                <Dialog className={styles.dialog} onClose={onClose} open={isOpenModal}>
-                    <Dialog.Overlay className={styles.overlay} />
-                    <div className={styles.container}>
-                        <Dialog.Title className={styles.title}>Make Changes</Dialog.Title>
-                        <Dialog.Description className={styles.description}>
-                            Caution, changes will be overwrite the previous content
-                        </Dialog.Description>
-                        <textarea
-                            ref={ref}
-                            className={styles.textarea}
-                            value={noteUpdate}
-                            onChange={(e) => setNoteUpdate(e.currentTarget.value)}
-                        />
-                        <div className={styles.buttons}>
-                            <button onClick={onUpdateNote}>Update</button>
-                            <button onClick={onClose}>Close</button>
-                        </div>
+            <Dialog className={styles.dialog} onClose={onClose} open={isOpenModal}>
+                <Dialog.Overlay className={styles.overlay} />
+                <div className={styles.container}>
+                    <Dialog.Title className={styles.title}>Make Changes</Dialog.Title>
+                    <Dialog.Description className={styles.description}>
+                        Caution, changes will be overwrite the previous content
+                    </Dialog.Description>
+                    <textarea
+                        ref={ref}
+                        className={styles.textarea}
+                        value={noteUpdate}
+                        onChange={(e) => setNoteUpdate(e.currentTarget.value)}
+                    />
+                    <div className={styles.buttons}>
+                        <button onClick={onUpdateNote}>Update</button>
+                        <button onClick={onClose}>Close</button>
                     </div>
-                </Dialog>
+                </div>
+            </Dialog>
         </div>
     );
 };

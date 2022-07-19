@@ -1,15 +1,11 @@
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { useState } from 'react';
-import { useDeleteTodo, useToggleTodo } from './store/todoStore';
-import Modal from './Modal';
 import styles from '../styles/modules/TodoItem.module.scss';
-import deleteTodoServer from '../lib/deleteTodo';
 import NotesDropdown from './NotesDropdown';
-import { FaRocket } from 'react-icons/fa';
-import { IoCheckmarkDoneCircleSharp } from 'react-icons/io5';
 import {MdCloudUpload} from 'react-icons/md';
 import EditNoteModal from './EditNoteModal';
 import LikeButton from './LikeButton';
+import { trpc } from '../utils/trpc';
 
 export interface Todo {
     autherId: number;
@@ -30,8 +26,18 @@ const TodoItem = ({ ...todo }: Todo) => {
     console.log({ todo });
     const [isOpenModal, setIsOpenModal] = useState(false);
 
-    const deleteTodo = useDeleteTodo();
-    const toggleTodo = useToggleTodo();
+    const utils = trpc.useContext();
+    const {mutate:deletePost} = trpc.useMutation(['post.delete'], {
+        onSuccess: () => {
+            utils.invalidateQueries(['post.userPosts']);
+        }
+    });
+    const {mutate:togglePost} = trpc.useMutation(['post.toggle'], {
+        onSuccess: () => {
+            utils.invalidateQueries(['post.userPosts']);
+        }
+    });
+
 
     const { content, isDone, createdAt, id, autherId } = todo;
 
@@ -40,12 +46,7 @@ const TodoItem = ({ ...todo }: Todo) => {
     //? can show full note in model as well like google does with google keep
 
     const onDeleteTodo = async (id: number) => {
-        const res = await deleteTodoServer(id);
-        if (!res) return;
-        const { err, message, status } = res;
-        console.log(err, message, status);
-        //* pessimistic delete todo
-        if (status === 200) deleteTodo(id);
+        deletePost({postId: id});
         //todo: create error and message context and wrap the entire app
         //todo: dispatch action providing error or message
         //todo: display the message or error on top of display which will diappear after 1s
@@ -74,7 +75,7 @@ const TodoItem = ({ ...todo }: Todo) => {
                             id={String(id)}
                             type="checkbox"
                             checked={isDone}
-                            onChange={() => toggleTodo({ createdAt, isDone: !isDone })}
+                            onChange={() => togglePost({ createdAt, isDone: !isDone })}
                         />
                         <label
                             className={styles.publish}
