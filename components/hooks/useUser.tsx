@@ -1,19 +1,11 @@
 import router from 'next/router';
 import { useEffect } from 'react';
-import useFetch from './useFetch';
-
-
-export interface User {
-    user: {
-        id: number
-    }
-}
+import { trpc } from '../../utils/trpc';
 
 //* redirect to login when not autherized
 //* redirect to dashboard when logged in
 export default function useUser({ redirectTo = '', redirectIfFound = false } = {}) {
-    const [isLoading, data, error] = useFetch<User>('/api/user');
-
+    const {isLoading, data, error} = trpc.useQuery(['user.get']);
     //* useEffect will run cleanup function when it umounts or when it run again
     //* but that most probably will be used in async function inside useEffect with dependency
     useEffect(() => {
@@ -24,9 +16,9 @@ export default function useUser({ redirectTo = '', redirectIfFound = false } = {
         if (!data || !redirectTo) return;
         if (
             // If redirectTo is set, redirect if the user was not found.
-            (redirectTo && !redirectIfFound && !data?.user?.id) ||
+            (redirectTo && !redirectIfFound && !data?.id) ||
             // If redirectIfFound is also set, redirect if the user was found
-            (data?.user?.id && redirectTo && redirectIfFound)
+            (data?.id && redirectTo && redirectIfFound)
         ) {
             router.push(redirectTo);
         }

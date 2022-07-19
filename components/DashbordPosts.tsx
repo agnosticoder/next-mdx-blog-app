@@ -5,11 +5,10 @@ import { FaRocket } from "react-icons/fa";
 import { Dispatch, SetStateAction } from "react";
 import styles from '../styles/modules/DashboardPosts.module.scss';
 import LikeButton from "./LikeButton";
-import { User } from "./hooks/useUser";
 
 interface DashboardPostsProps {
     dposts: Post[],
-    user: User | undefined,
+    user: {id: number} | undefined,
     hasUser: boolean,
     setRef: Dispatch<SetStateAction<HTMLDivElement | null | undefined>>
 }
@@ -26,7 +25,7 @@ const DashboardPosts = ({ user, hasUser, dposts, setRef }: DashboardPostsProps) 
                             {hasUser && (
                             <span className={styles.buttons}>
                                     <LikeButton
-                                        userId={user?.user.id}
+                                        userId={user?.id}
                                         postId={todo.id}
                                         likedByIds={todo.likedBy.map((user) => user.id)}
                                         totalLikes={todo.likedBy.length}
@@ -42,7 +41,7 @@ const DashboardPosts = ({ user, hasUser, dposts, setRef }: DashboardPostsProps) 
                         {hasUser && (
                             <span className={styles.buttons}>
                                 <LikeButton
-                                    userId={user?.user.id}
+                                    userId={user?.id}
                                     postId={todo.id}
                                     likedByIds={todo.likedBy.map((user) => user.id)}
                                     totalLikes={todo.likedBy.length}

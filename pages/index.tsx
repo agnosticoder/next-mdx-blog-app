@@ -2,14 +2,14 @@ import DashboardPosts from '../components/DashbordPosts';
 import useDashboardPagination from '../components/hooks/useDashboardPagination';
 import useDashboardPosts from '../components/hooks/useDashboardPosts';
 import useUser from '../components/hooks/useUser';
-import filterDataToMDX from '../lib/dataFilterToMDX';
-import prisma from '../lib/getPrisma';
 import styles from '../styles/modules/Dashboard.module.scss';
 
 // const Dashboard = ({ posts }) => {
 const Dashboard = () => {
     const { data: user, error } = useUser();
-    const hasUser = !!user?.user;
+    const hasUser = !!user?.id;
+
+    console.log('user', user);
 
     //todo: this component will render the posts and also implement verical pagination
     const [dposts, onLoadMore, isLoading, hasMore] = useDashboardPosts();

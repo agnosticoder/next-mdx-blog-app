@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { trpc } from '../utils/trpc';
 
 const logout = async () => {
     const res = await fetch('/api/logout');
@@ -9,19 +10,16 @@ const logout = async () => {
 
 const Logout = () => {
     const router = useRouter();
-
-    const onLogout = () => {
-        logout()
-            .then((res) => {
-                console.log(res);
-                router.push('/login');
-            })
-            .catch((err) => console.log(err?.message));
-    };
+    const utils = trpc.useContext();
+    const {mutate: logout} = trpc.useMutation(['user.logout'], {
+        onSuccess: () => {
+            router.push('/login');
+        }
+    });
 
     return (
         <div>
-            <button onClick={onLogout} type="button">
+            <button onClick={() => logout()} type="button">
                 Logout
             </button>
         </div>

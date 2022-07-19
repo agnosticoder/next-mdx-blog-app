@@ -61,6 +61,23 @@ const userRouter = createRouter()
             await ctx.session.save();
             return { name, email };
     }
+})
+.mutation('logout', {
+    meta: {
+        hasAuth: true,
+    },
+    resolve: async ({ ctx }) => {
+        await ctx.session.destroy();
+        return { message: 'successsfully logged out' };
+    }
+})
+.query('get', {
+    meta: {
+        hasAuth: true,
+    },
+    resolve: async ({ ctx }) => {
+        return ctx.session.user;
+    }
 });
 
 export default userRouter;
