@@ -3,8 +3,8 @@ import { Post } from "./hooks/useDashboardPosts";
 // import styles from '../styles/modules/TodoItem.module.scss';
 import { FaRocket } from "react-icons/fa";
 import { Dispatch, SetStateAction } from "react";
-import styles from '../styles/modules/DashboardPosts.module.scss';
 import LikeButton from "./LikeButton";
+import MDXComponents from './MDXComponents';
 
 interface DashboardPostsProps {
     dposts: Post[],
@@ -20,10 +20,16 @@ const DashboardPosts = ({ user, hasUser, dposts, setRef }: DashboardPostsProps) 
             {dposts.map((todo, i) => {
                 if (dposts.length === i + 1) {
                     return (
-                        <div className={styles.container} ref={setRef} key={todo.id}>
-                            <MDXRemote {...todo.content} />
+                        <div
+                            className={`bg-stone-200 text-stone-800 post-shadow mb-3 pb-1 py-3 px-10 rounded-lg border-[1px] border-black`}
+                            ref={setRef}
+                            key={todo.id}
+                        >
+                            <div className="post">
+                                <MDXRemote {...todo.content} components={MDXComponents as any} />
+                            </div>
                             {hasUser && (
-                            <span className={styles.buttons}>
+                                <span className="flex items-center">
                                     <LikeButton
                                         userId={user?.id}
                                         postId={todo.id}
@@ -36,10 +42,15 @@ const DashboardPosts = ({ user, hasUser, dposts, setRef }: DashboardPostsProps) 
                     );
                 }
                 return (
-                    <div className={styles.container} key={todo.id}>
-                        <MDXRemote {...todo.content} />
+                    <div
+                        className="bg-stone-200 text-stone-800 post-shadow mb-3 pb-1 py-3 px-10 rounded-lg border-[1px] border-black"
+                        key={todo.id}
+                    >
+                        <div className="post">
+                            <MDXRemote {...todo.content} components={MDXComponents as any}/>
+                        </div>
                         {hasUser && (
-                            <span className={styles.buttons}>
+                            <span className="flex items-center">
                                 <LikeButton
                                     userId={user?.id}
                                     postId={todo.id}

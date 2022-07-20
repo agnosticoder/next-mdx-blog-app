@@ -1,6 +1,5 @@
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { useState } from 'react';
-import styles from '../styles/modules/TodoItem.module.scss';
 import NotesDropdown from './NotesDropdown';
 import {MdCloudUpload} from 'react-icons/md';
 import EditNoteModal from './EditNoteModal';
@@ -17,11 +16,6 @@ export interface Todo {
     _count: {likedBy: number}
     likedBy: {id: string}[]
 }
-
-//Todo: This was just experiment, please remove this form here and all its references
-const Ins = ({children, ...rest}:{children: string}) => (
-    <ins style={{fontSize: 'small'}} {...rest}>{children}</ins>
-);
 
 const Post = ({ ...todo }: Todo) => {
     console.log({ todo });
@@ -54,11 +48,11 @@ const Post = ({ ...todo }: Todo) => {
     };
 
     return (
-        <div className={styles.container}>
+        <div className='bg-stone-200 text-stone-800 post-shadow mb-3 pb-1 py-3 px-10 rounded-lg border-[1px] border-black'>
             {/*//*  todo content rendered in mdx */}
-            <div className={styles.noteWrapper}>
-                <div className={styles.todo}>{content && <MDXRemote {...content} components={MDXComponents as any}/>}</div>
-                <div className={styles.menu}>
+            <div className='relative mb-2'>
+                <div className='post'>{content && <MDXRemote {...content} components={MDXComponents as any}/>}</div>
+                <div className='absolute top-0 right-0'>
                     <NotesDropdown id={id} setIsOpenModel={setIsOpenModal} onDeleteTodo={onDeleteTodo} />
                 </div>
             </div>
@@ -68,22 +62,22 @@ const Post = ({ ...todo }: Todo) => {
                 //todo: make it work, change the DB schema accordingly
                 //todo: include more field in local state form DB
                 //* isDone will only be available if the user is signed in
-                <div className={styles.dateWrapper}>
+                <div className='pt-1 border-t-[1px] border-stone-400/30 flex gap-1 items-start'>
                     {/*//* toggle todo */}
-                    <div className={styles.doneWrapper}>
+                    <div className='relative'>
                         <input
-                            className={styles.checkbox}
+                            className='absolute scale-0'
                             id={String(id)}
                             type="checkbox"
                             checked={isDone}
                             onChange={() => togglePost({ postId:todo.id, isDone: !isDone })}
                         />
                         <label
-                            className={styles.publish}
+                            className='cursor-pointer'
                             title={`${isDone ? 'Unpublish' : 'Publish'}`}
                             htmlFor={String(id)}
                         >
-                            <MdCloudUpload className={`${isDone ? styles.done : styles.notDone}`} />
+                            <MdCloudUpload className={`${isDone ? 'text-blue-400' : 'text-blue-400/50'}`} />
                         </label>
                     </div>
                     {isDone && (
@@ -94,7 +88,7 @@ const Post = ({ ...todo }: Todo) => {
                             likedByIds={todo.likedBy.map((id) => id.id)}
                         />
                     )}
-                    <div className={styles.date}>
+                    <div className='text-base inline-block text-pink-500 list-none'>
                         <li>{new Date(Number(createdAt)).toDateString()}</li>
                     </div>
                     <EditNoteModal todo={todo} isOpenModal={isOpenModal} onClose={() => setIsOpenModal(false)} />

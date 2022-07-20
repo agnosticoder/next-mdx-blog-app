@@ -1,4 +1,4 @@
-import '../styles/styles.scss';
+import '../styles/main.css';
 import Layout from '../components/Layout';
 import { AppProps } from 'next/app';
 import { withTRPC } from '@trpc/next';

@@ -29,12 +29,12 @@ const AddTodoForm = ({ setError }: { setError: Dispatch<SetStateAction<string>> 
     };
 
     return (
-        <div className={styles.container}>
+        <div className='mb-8'>
             <div>
                 <form>
                     {/* eslint-disable-next-line react/self-closing-comp */}
                     <textarea
-                        className={styles.textarea}
+                        className='w-full h-52 resize-none'
                         placeholder="Add Todo"
                         value={todoTitle}
                         onChange={(e) => {
@@ -42,7 +42,8 @@ const AddTodoForm = ({ setError }: { setError: Dispatch<SetStateAction<string>> 
                             setTodoTitle(e.currentTarget.value);
                         }}
                     />
-                    <button className={styles.button} type="submit" onClick={handleAddTodo}>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'
+                     type="submit" onClick={handleAddTodo}>
                         Add Todo
                     </button>
                 </form>

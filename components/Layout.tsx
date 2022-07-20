@@ -1,39 +1,37 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { ReactElement } from 'react';
-import useUser from './hooks/useUser';
 import Logout from './Logout';
 
 
 const Layout = ({ children }: { children: ReactElement }) => {
 
     return (
-        // const Layout = ({ children }) => (
         <div>
             <Head>
                 <title>Next MDX Notes App</title>
             </Head>
-            <div className="header">
-                <div className="nav-container">
-                    <ul className="nav">
+            <div className='flex flex-col min-h-[100px] justify-center bg-[#62929E] text-[#C6C5B9] mb-8'>
+                <div>
+                    <ul className='flex justify-evenly mb-8'>
                         <li>
                             <Link href="/">
-                                <a className="nav-link">Dashboard</a>
+                                <a className=''>Dashboard</a>
                             </Link>
                         </li>
                         <li>
                             <Link href="/notes">
-                                <a className="nav-link">Posts</a>
+                                <a className=''>Posts</a>
                             </Link>
                         </li>
                         <li>
                             <Link href="/login">
-                                <a className="nav-link">Login</a>
+                                <a className=''>Login</a>
                             </Link>
                         </li>
                         <li>
                             <Link href="/signup">
-                                <a className="nav-link">Sign up</a>
+                                <a className=''>Sign up</a>
                             </Link>
                         </li>
                         <li>
@@ -41,9 +39,9 @@ const Layout = ({ children }: { children: ReactElement }) => {
                         </li>
                     </ul>
                 </div>
-                <h1>MDX Blogging Platform</h1>
+                <h1 className='text-center'>MDX Blogging Platform</h1>
             </div>
-            <main>{children}</main>
+            <main className='w-[80%] mx-auto'>{children}</main>
         </div>
     );
 };

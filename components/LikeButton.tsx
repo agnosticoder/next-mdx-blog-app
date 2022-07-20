@@ -1,7 +1,6 @@
 import { Switch } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 import { RiRocket2Fill } from 'react-icons/ri';
-import styles from '../styles/modules/LikeButton.module.scss';
 import { trpc } from '../utils/trpc';
 
 interface LikeButtonProps {
@@ -15,10 +14,10 @@ const LikeButton = ({ userId, postId, likedByIds, totalLikes }: LikeButtonProps)
     const [isLike, setIsLike] = useState(false);
     const [likesCount, setLikesCount] = useState(0);
     const utils = trpc.useContext();
-    const {mutateAsync} = trpc.useMutation(['post.like'], {
+    const { mutateAsync } = trpc.useMutation(['post.like'], {
         onSuccess: () => {
             utils.invalidateQueries(['post.userPosts']);
-        }
+        },
     });
 
     //* set isLike to true if likedByIds contains userId
@@ -35,7 +34,7 @@ const LikeButton = ({ userId, postId, likedByIds, totalLikes }: LikeButtonProps)
         // const { res, result } = await likePost({ isLike: !isLike, postId, userId });
         //Todo: fix the following shit
         const post = await mutateAsync({ isLike: !isLike, postId, userId });
-        if(!post) return;
+        if (!post) return;
         if (isLike) {
             setIsLike(!isLike);
             setLikesCount(likesCount - 1);
@@ -54,18 +53,12 @@ const LikeButton = ({ userId, postId, likedByIds, totalLikes }: LikeButtonProps)
 
     return (
         <>
-            <Switch checked={isLike} onChange={onLike} className={styles.switch}>
-                {isLike ? (
-                    <span title='Unlike'>
-                        <RiRocket2Fill className={styles.likeIcon} />
-                    </span>
-                ) : (
-                    <span title='Like'>
-                        <RiRocket2Fill className={styles.noLike} />
-                    </span>
-                )}
+            <Switch checked={isLike} onChange={onLike} className="">
+                <span title="Unlike">
+                    <RiRocket2Fill className={`${isLike ? 'text-red-500' : 'text-red-300'}`} />
+                </span>
             </Switch>
-            <span className={styles.likeCount}>{`(${likesCount})`}</span>
+            <span className='text-sm'>{`(${likesCount})`}</span>
         </>
     );
 };

@@ -1,6 +1,5 @@
 import {Dialog} from '@headlessui/react';
 import { MouseEvent, useEffect, useRef, useState } from 'react';
-import styles from '../styles/modules/EditNoteModal.module.scss';
 import { Todo } from './Post';
 import { trpc } from '../utils/trpc';
 import client from '../utils/client';
@@ -53,22 +52,22 @@ const EditNoteModal = ({ isOpenModal, onClose, todo }: EditNoteModalProps) => {
     return (
         <div>
             {/* //todo: add animation using any libarary */}
-            <Dialog className={styles.dialog} onClose={onClose} open={isOpenModal}>
-                <Dialog.Overlay className={styles.overlay} />
-                <div className={styles.container}>
-                    <Dialog.Title className={styles.title}>Make Changes</Dialog.Title>
-                    <Dialog.Description className={styles.description}>
+            <Dialog className='fixed inset-0' onClose={onClose} open={isOpenModal}>
+                <Dialog.Overlay className='fixed inset-0 bg-stone-900/50' />
+                <div className='fixed inset-14 z-10 bg-stone-100 post-shadow rounded-lg p-6'>
+                    <Dialog.Title className='text-3xl'>Make Changes</Dialog.Title>
+                    <Dialog.Description className='text-xl mb-4'>
                         Caution, changes will be overwrite the previous content
                     </Dialog.Description>
                     <textarea
                         ref={ref}
-                        className={styles.textarea}
+                        className='resize-none w-full h-96 block mb-8'
                         value={noteUpdate}
                         onChange={(e) => setNoteUpdate(e.currentTarget.value)}
                     />
-                    <div className={styles.buttons}>
-                        <button onClick={onUpdateNote}>Update</button>
-                        <button onClick={onClose}>Close</button>
+                    <div className='flex gap-1 text-stone-200'>
+                        <button className='bg-stone-500 rounded p-1' onClick={onUpdateNote}>Update</button>
+                        <button className='bg-stone-500 rounded p-1' onClick={onClose}>Close</button>
                     </div>
                 </div>
             </Dialog>
