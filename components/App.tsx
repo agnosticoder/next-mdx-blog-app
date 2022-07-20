@@ -1,12 +1,17 @@
-import { TodoProvider } from './store/todoStore';
-import TodoApp from './TodoApp';
+import { useState } from 'react';
+import AddTodoForm from './AddTodoForm';
+import Post from './Post';
+import { trpc } from '../utils/trpc';
 
 const App = () => {
+    const [error, setError] = useState('');
+    const {data: todos} = trpc.useQuery(['post.userPosts']);
+
     return (
         <div>
-            <TodoProvider>
-                <TodoApp/>
-            </TodoProvider>
+            {error && <h3>{error}</h3>}
+            <AddTodoForm setError={setError} />
+            {todos?.map((todo) => <Post key={todo.id} {...todo} />)}
         </div>
     );
 };

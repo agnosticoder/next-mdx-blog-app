@@ -4,9 +4,7 @@ import ClientOnly from '../components/ClientOnly';
 export default function Notes() {
     return (
         <ClientOnly>
-            <div> 
-                <App />
-            </div>
+            <App />
         </ClientOnly>
     );
 }

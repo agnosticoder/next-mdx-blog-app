@@ -52,11 +52,11 @@ const Paragraph = ({ children, ...rest }: { children: string }) => (
 );
 
 const Pre = ({ children, ...rest }: { children: string }) => (
-    <pre {...rest} className="mb-4 p-3 bg-stone-800/80 overflow-x-auto rounded-md">{children}</pre>
+    <pre {...rest} className="mb-4 p-3 text-stone-200 bg-stone-800 overflow-x-auto rounded-md">{children}</pre>
 );
 
 const Code = ({ children, ...rest }: { children: string }) => (
-    <code {...rest} className="bg-stone-600 rounded text-sm">{children}</code>
+    <code {...rest} className="rounded text-sm">{children}</code>
 );
 
 const Image = ({ ...rest }: { src: string }) => (
