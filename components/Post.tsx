@@ -6,6 +6,7 @@ import {MdCloudUpload} from 'react-icons/md';
 import EditNoteModal from './EditNoteModal';
 import LikeButton from './LikeButton';
 import { trpc } from '../utils/trpc';
+import MDXComponents from './MDXComponents';
 
 export interface Todo {
     autherId: string;
@@ -56,7 +57,7 @@ const Post = ({ ...todo }: Todo) => {
         <div className={styles.container}>
             {/*//*  todo content rendered in mdx */}
             <div className={styles.noteWrapper}>
-                <div className={styles.todo}>{content && <MDXRemote {...content} />}</div>
+                <div className={styles.todo}>{content && <MDXRemote {...content} components={MDXComponents as any}/>}</div>
                 <div className={styles.menu}>
                     <NotesDropdown id={id} setIsOpenModel={setIsOpenModal} onDeleteTodo={onDeleteTodo} />
                 </div>

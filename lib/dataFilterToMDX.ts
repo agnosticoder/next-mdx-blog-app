@@ -1,6 +1,7 @@
-import { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
+import rehypeHighlight from 'rehype-highlight';
 import remarkGfm from 'remark-gfm';
+import emoji from 'remark-emoji';
 
 type Unarray<T> = T extends Array<infer U> ? U : T;
 
@@ -12,7 +13,7 @@ const serializeDataToMDX = async <T>(data:SerializeToMDXProp<T>[]) => {
     const serializedData = await data.map(async (post) => {
         const serializedPost = {
             ...post,
-            content: await serialize(post.content, {mdxOptions: {remarkPlugins:[remarkGfm]}}),
+            content: await serialize(post.content, { parseFrontmatter: true, mdxOptions: {remarkPlugins:[ remarkGfm], rehypePlugins: [rehypeHighlight]}}),
         };
         return serializedPost;
     });

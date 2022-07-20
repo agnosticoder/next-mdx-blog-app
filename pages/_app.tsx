@@ -3,7 +3,7 @@ import Layout from '../components/Layout';
 import { AppProps } from 'next/app';
 import { withTRPC } from '@trpc/next';
 import { AppRouter } from '../server/routers/_app';
-
+import 'highlight.js/styles/atom-one-dark.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
 // function MyApp({ Component, pageProps }) {
