@@ -48,7 +48,7 @@ const Layout = ({ children }: { children: ReactElement }) => {
                                 </Link>
                             </li> */}
                                 <li>
-                                    <Link href="user/post/create">
+                                    <Link href="/user/post/create">
                                         <a className="hover:bg-stone-300/30 p-2 rounded">Create Post</a>
                                     </Link>
                                 </li>
@@ -89,7 +89,7 @@ const Layout = ({ children }: { children: ReactElement }) => {
                                                 active ? 'bg-teal-800 text-stone-100' : 'bg-transparent'
                                             }`}
                                         >
-                                            <Link href={`user/post/create`}>
+                                            <Link href={`/user/post/create`}>
                                                 <a className="block px-4 py-2">Create Post</a>
                                             </Link>
                                         </div>

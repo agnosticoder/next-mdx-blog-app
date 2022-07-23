@@ -1,4 +1,4 @@
-import CreatePostForm from '../../../components/CreatePostForm';
+import CreatePostForm from '../../../../components/CreatePostForm';
 
 const EditPost = () => {
     return (
