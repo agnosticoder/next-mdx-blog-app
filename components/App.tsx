@@ -10,7 +10,7 @@ const App = () => {
     return (
         <div>
             {error && <h3>{error}</h3>}
-            <AddTodoForm/>
+            <AddTodoForm isEditing={false}/>
             {todos?.map((todo) => <Post key={todo.id} {...todo} />)}
         </div>
     );

@@ -37,7 +37,7 @@ const postRouter = createRouter()
         },
     })
     // read
-    .query('dashboard', {
+    .query('paginated', {
         input: z.object({
             cursor: z.string().nullish(),
         }),
@@ -60,6 +60,9 @@ const postRouter = createRouter()
                 take: 4,
                 skip: cursor ? 1 : 0,
                 cursor: cursor ? { id: cursor } : undefined,
+                orderBy: {
+                    createdAt: 'desc',
+                }
             });
         },
     })

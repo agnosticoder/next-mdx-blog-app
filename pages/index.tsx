@@ -15,14 +15,15 @@ const Dashboard = () => {
     const { inView, elementRef } = useInView({ threshold: 1 });
     const utils = trpc.useContext();
     const { data: posts, fetchNextPage, hasNextPage, isFetchingNextPage } = trpc.useInfiniteQuery(
-        ['post.dashboard', {}],
+        ['post.paginated', {}],
         {
             getNextPageParam: (lastPage) => lastPage[lastPage.length - 1]?.id || undefined,
         }
     );
+
     const { mutate } = trpc.useMutation(['post.like'], {
         onSuccess: (data) => {
-            utils.invalidateQueries(['post.dashboard']);
+            utils.invalidateQueries(['post.paginated']);
         },
     });
 
@@ -59,16 +60,17 @@ const Dashboard = () => {
                             {user ? (
                                 <div className="flex gap-2 items-center">
                                     {post.likedBy.length > 0 ? (
-                                        post.likedBy.map(
-                                            (u) =>
-                                                u.id === user.id && (
-                                                    <button
-                                                        key={post.id}
-                                                        onClick={() => onUnlike({ postId: post.id, userId: user.id })}
-                                                    >
-                                                        <AiFillHeart size={20} className="text-red-500" />
-                                                    </button>
-                                                )
+                                        post.likedBy.find(({ id }) => id === user.id) ? (
+                                            <button
+                                                key={post.id}
+                                                onClick={() => onUnlike({ postId: post.id, userId: user.id })}
+                                            >
+                                                <AiFillHeart size={20} className="text-red-500" />
+                                            </button>
+                                        ) : (
+                                            <button onClick={() => onLike({ postId: post.id, userId: user.id })}>
+                                                <AiOutlineHeart size={20} className="text-red-500/70" />
+                                            </button>
                                         )
                                     ) : (
                                         <button onClick={() => onLike({ postId: post.id, userId: user.id })}>

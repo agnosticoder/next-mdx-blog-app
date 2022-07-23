@@ -6,7 +6,7 @@ import { trpc } from '../utils/trpc';
 
 const InifiniteScroll = () => {
     const { inView, elementRef } = useInView({threshold: 1});
-    const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = trpc.useInfiniteQuery(['post.dashboard', {}], {
+    const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = trpc.useInfiniteQuery(['post.paginated', {}], {
         getNextPageParam: (lastPage) => {
             console.log('lastPage', lastPage);
             return lastPage[lastPage.length - 1]?.id || undefined;

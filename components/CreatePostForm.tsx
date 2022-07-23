@@ -8,7 +8,7 @@ type CreatePostFormInput = {
     content: string;
 }
 
-const CreatePostForm = () => {
+const CreatePostForm = ({isEditing}: {isEditing: boolean}) => {
     const router = useRouter();
     const {
         register,

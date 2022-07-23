@@ -11,6 +11,7 @@
     "connect": "pscale connect mdx-notes-app main --port 3309"
   },
   "dependencies": {
+    "@ebay/nice-modal-react": "^1.2.6",
     "@headlessui/react": "^1.6.6",
     "@mdx-js/loader": "^1.6.22",
     "@next/mdx": "^10.0.7",
