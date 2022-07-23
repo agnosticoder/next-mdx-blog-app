@@ -3,7 +3,7 @@ import CreatePostForm from '../../../components/CreatePostForm';
 const CreatePost = () => {
     return (
         <div>
-            <CreatePostForm isEditing={false}/>
+            <CreatePostForm />
         </div>
     );
 };

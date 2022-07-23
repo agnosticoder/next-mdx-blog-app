@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
-import EditPostForm from '../../../../components/EditPostForm';
-import { trpc } from '../../../../utils/trpc';
+import EditDraftForm from '../../../../../components/EditDraftForm';
+import { trpc } from '../../../../../utils/trpc';
 
-const EditPost = () => {
+const EditDraft = () => {
     const router = useRouter();
     const { id } = router.query as { id: string };
     const {data: post, isSuccess} = trpc.useQuery(['post.get', { postId: id }],{
@@ -13,9 +13,9 @@ const EditPost = () => {
 
     return (
         <div>
-            {isSuccess && <EditPostForm {...prefill}/>}
+            {isSuccess && <EditDraftForm {...prefill}/>}
         </div>
     );
-};
+}
 
-export default EditPost;
+export default EditDraft;

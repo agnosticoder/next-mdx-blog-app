@@ -15,7 +15,7 @@ const Post = () => {
                 <h1 className="text-2xl font-bold mb-4">{post?.title}</h1>
             </div>
             <div className="bg-stone-200 text-stone-800 post-shadow mb-3 py-3 px-10 rounded-lg border-[1px] border-black">
-                {post && <MDXRemote {...(post.content as any)} components={MDXComponents as any} />}
+                {post && <MDXRemote {...(post.mdxString)} components={MDXComponents as any} />}
             </div>
             {/* //Todo: Hook up the logic */}
             <div className='mb-32'>

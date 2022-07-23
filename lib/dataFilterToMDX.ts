@@ -14,7 +14,7 @@ const serializeDataToMDXArray = async <T>(data:SerializeToMDXProps<T>[]) => {
     const serializedData = await data.map(async (post) => {
         const serializedPost = {
             ...post,
-            content: await serialize(post.content, { parseFrontmatter: true, mdxOptions: {remarkPlugins:[remarkGfm], rehypePlugins: [rehypeHighlight]}}),
+            mdxString: await serialize(post.content, { parseFrontmatter: true, mdxOptions: {remarkPlugins:[remarkGfm], rehypePlugins: [rehypeHighlight]}}),
         };
         return serializedPost;
     });
@@ -28,7 +28,7 @@ export default serializeDataToMDXArray;
 export const serializeDataToMDX = async <T>(data: SerializeToMDXProps<T>) => {
     const serializedData = {
         ...data,
-        content: await serialize(data.content, { parseFrontmatter: true, mdxOptions: {remarkPlugins:[remarkGfm], rehypePlugins: [rehypeHighlight]}}),
+        mdxString: await serialize(data.content, { parseFrontmatter: true, mdxOptions: {remarkPlugins:[remarkGfm], rehypePlugins: [rehypeHighlight]}}),
     };
     return serializedData;
 }

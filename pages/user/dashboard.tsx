@@ -20,13 +20,13 @@ const Dashboard = () => {
                 <div className="list-none col-span-1">
                     <button
                         onClick={() => setPostStatus('POST')}
-                        className="text-teal-800 bg-stone-100 w-full p-2 rounded mb-2 hover:bg-stone-300"
+                        className={`w-full p-2 rounded mb-2 ${postStatus === 'POST' ? 'bg-teal-700 text-stone-200 hover:bg-teal-800' : 'text-teal-800 bg-stone-100 hover:bg-stone-300'}`}
                     >
                         Published Posts
                     </button>
                     <button
                         onClick={() => setPostStatus('DRAFT')}
-                        className="text-teal-800 bg-stone-100 w-full p-2 rounded mb-2 hover:bg-stone-300"
+                        className={`w-full p-2 rounded mb-2 ${postStatus === 'DRAFT' ? 'bg-teal-700 text-stone-200 hover:bg-teal-800' : 'text-teal-800 bg-stone-100 hover:bg-stone-300'}`}
                     >
                         Drafts
                     </button>
@@ -39,7 +39,7 @@ const Dashboard = () => {
                                 <div className="col-span-1">
                                     <div className="h-full flex gap-4 font-extralight text-sm justify-end items-center">
                                         <div>
-                                            <Link href={`/user/post/edit/${post.id}`}>
+                                            <Link href={post.isDone ? `/user/post/edit/${post.id}`: `/user/post/edit/draft/${post.id}`}>
                                                 <a className="inline-block hover:bg-stone-200/80 px-2 py-1 rounded">Edit</a>
                                             </Link>
                                             {!post.isDone && (

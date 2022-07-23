@@ -8,30 +8,36 @@ type Input = {
     content: string;
 }
 
-const CreatePostForm = () => {
+const EditPostForm = ({id, title, content}: {id: string, title?: string, content?: string}) => {
     const router = useRouter();
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<Input>();
+    } = useForm<Input>({defaultValues: {
+        title, content
+    }});
+    const utils = trpc.useContext();
     const { mutate, error } = trpc.useMutation(['post.create'], {
-        onSuccess: (data) => {
-            if (data.isDone) {
-                router.push('/');
-                return;
-            }
+        onSuccess: async (data) => {
+            await utils.invalidateQueries(['post.get', { postId: id }]);
             router.push('/user/dashboard');
         },
     });
 
+    const {mutate: deletePost} = trpc.useMutation(['post.delete'], {
+        onSuccess: () => {
+            router.push('/user/dashboard');
+        }
+    });
+
     const onCreatePost = ({ content, title }: Input) => {
-        mutate({ content, title, isDone: true });
+        mutate({ content, title, isDone: true, postId: id });
     };
 
-    const onSaveAsDraft = ({ content, title }: Input) => {
-        mutate({ content, title, isDone: false });
-    };
+    const onDeletePost = ({postId}:{postId: string}) => {
+        deletePost({postId});
+    }
 
     return (
         <div className="fixed sm:top-20 sm:bottom-16 sm:inset-12 inset-1 top-20 bottom-16">
@@ -72,21 +78,16 @@ const CreatePostForm = () => {
                         >
                             Publish
                         </button>
-                        <button
-                            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-[7px] px-4 border border-gray-400 rounded shadow"
-                            type="button"
-                            onClick={handleSubmit(onSaveAsDraft)}
-                        >
-                            Save as Draft
-                        </button>
                     </div>
                     <div>
-                        <Link href={'/'}>
+                        <Link href={'/user/dashboard'}>
                             <a className="inline-block bg-stone-500 hover:bg-stone-700 text-white font-bold py-2 px-4 rounded">
                                 Dismiss
                             </a>
                         </Link>
-                        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2">
+                        <button
+                        onClick={() => onDeletePost({postId: id})}
+                         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2">
                             Delete
                         </button>
                     </div>
@@ -96,4 +97,4 @@ const CreatePostForm = () => {
     );
 };
 
-export default CreatePostForm;
+export default EditPostForm;

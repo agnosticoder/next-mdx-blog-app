@@ -7,11 +7,13 @@ import { error } from 'console';
 
 const postRouter = createRouter()
     //create
+    //Todo: change to upsert later
     .mutation('create', {
         meta: {
             hasAuth: true,
         },
         input: z.object({
+            postId: z.string().optional(),
             title: z.string(),
             content: z.string(),
             isDone: z.boolean(),
@@ -24,15 +26,25 @@ const postRouter = createRouter()
             }catch(err:any){
                 throw new TRPCError({'code': 'PARSE_ERROR', 'message': err?.message});
             }
-            return await prisma.post.create({
-                data: {
-                    ...post,
+            return await prisma.post.upsert({
+                where: {
+                    id: post.postId ?? '',
+                },
+                update: {
+                    title: post.title,
+                    content: post.content,
+                    isDone: post.isDone,
+                },
+                create: {
+                    title: post.title,
+                    content: post.content,
+                    isDone: post.isDone,
                     author: {
                         connect: {
                             id,
-                        },
-                    },
-                },
+                        }
+                    }
+                }
             });
         },
     })
@@ -77,6 +89,9 @@ const postRouter = createRouter()
                     autherId: id,
                 },
                 include: { _count: { select: { likedBy: true } }, likedBy: { select: { id: true } } },
+                orderBy: {
+                    createdAt: 'desc',
+                },
             });
 
             return await filterDataToMDX<typeof posts>(posts);

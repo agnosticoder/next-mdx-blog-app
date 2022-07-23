@@ -8,29 +8,39 @@ type Input = {
     content: string;
 }
 
-const CreatePostForm = () => {
+const EditDraftForm = ({id, title, content}: {id: string, title?: string, content?: string}) => {
     const router = useRouter();
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<Input>();
+    } = useForm<Input>({defaultValues: {
+        title, content
+    }});
+    const utils = trpc.useContext();
     const { mutate, error } = trpc.useMutation(['post.create'], {
-        onSuccess: (data) => {
-            if (data.isDone) {
-                router.push('/');
-                return;
-            }
+        onSuccess: async (data) => {
+            await utils.invalidateQueries(['post.get', { postId: id }]);
             router.push('/user/dashboard');
         },
     });
 
+    const {mutate: deletePost} = trpc.useMutation(['post.delete'], {
+        onSuccess: () => {
+            router.push('/user/dashboard');
+        }
+    });
+
     const onCreatePost = ({ content, title }: Input) => {
-        mutate({ content, title, isDone: true });
+        mutate({ content, title, isDone: true, postId: id });
     };
 
+    const onDeletePost = ({postId}:{postId: string}) => {
+        deletePost({postId});
+    }
+
     const onSaveAsDraft = ({ content, title }: Input) => {
-        mutate({ content, title, isDone: false });
+        mutate({ content, title, isDone: false, postId: id });
     };
 
     return (
@@ -81,12 +91,14 @@ const CreatePostForm = () => {
                         </button>
                     </div>
                     <div>
-                        <Link href={'/'}>
+                        <Link href={'/user/dashboard'}>
                             <a className="inline-block bg-stone-500 hover:bg-stone-700 text-white font-bold py-2 px-4 rounded">
                                 Dismiss
                             </a>
                         </Link>
-                        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2">
+                        <button
+                        onClick={() => onDeletePost({postId: id})}
+                         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2">
                             Delete
                         </button>
                     </div>
@@ -96,4 +108,4 @@ const CreatePostForm = () => {
     );
 };
 
-export default CreatePostForm;
+export default EditDraftForm;

@@ -14,7 +14,6 @@ import Logout from './Logout';
 const Layout = ({ children }: { children: ReactElement }) => {
     const router = useRouter();
     const path = router.pathname;
-    console.log('path', path);
     const utils = trpc.useContext();
     const { data: user } = trpc.useQuery(['user.get']);
     const { mutate: logout } = trpc.useMutation(['user.logout'], {
