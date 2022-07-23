@@ -32,7 +32,7 @@ const EditNoteModal = ({ isOpenModal, onClose, todo }: EditNoteModalProps) => {
     useEffect(() => {
         (async function () {
             // const res = await getTodo(todo.createdAt);
-            const post = await client.query('post.getPost', { postId: todo.id });
+            const post = await client.query('post.get', { postId: todo.id });
             if (!post) return;
             const { content } = post;
             setNoteUpdate(content);

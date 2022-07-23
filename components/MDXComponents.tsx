@@ -76,17 +76,17 @@ const List = ({ children, ...rest }: { children: ReactNode }) => (
 const CustomLink = ({children, href, ...props}:HTMLProps<HTMLAnchorElement>) => {
     const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'));
 
-    console.log('href:', href);
+    // console.log('href:', href);
   
     if (isInternalLink) {
       return (
         <Link href={href}>
-          <a className="text-base hover:underline text-yellow-400" {...props}>{children}</a>
+          <a className="text-base cursor-pointer hover:underline text-yellow-400" {...props}>{children}</a>
         </Link>
       );
     }
 
-    return <a className="text-base hover:underline text-blue-400" target="_blank" rel="noopener noreferrer" {...props} />;
+    return <a className="text-base cursor-pointer hover:underline text-blue-400" target="_blank" rel="noopener noreferrer" {...props}>{children}</a>;
 };
 
 

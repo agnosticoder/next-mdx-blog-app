@@ -25,6 +25,7 @@ model User {
 
 model Post {
   id        String   @id @default(uuid())
+  title     String   @db.Text
   content   String   @db.LongText
   isDone    Boolean  @default(false)
   author    User     @relation(fields: [autherId], references: [id])

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import AddTodoForm from './AddTodoForm';
+import AddTodoForm from './CreatePostForm';
 import Post from './Post';
 import { trpc } from '../utils/trpc';
 
@@ -10,7 +10,7 @@ const App = () => {
     return (
         <div>
             {error && <h3>{error}</h3>}
-            <AddTodoForm setError={setError} />
+            <AddTodoForm/>
             {todos?.map((todo) => <Post key={todo.id} {...todo} />)}
         </div>
     );
