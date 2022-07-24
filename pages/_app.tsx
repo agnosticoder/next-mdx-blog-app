@@ -25,6 +25,9 @@ export default withTRPC<AppRouter>({
 
         return {
             url,
+            fetch: (url, options) => {
+                return fetch(url, {...options, credentials: 'include'});
+            },
             transformer: superjson,
         }
     },
