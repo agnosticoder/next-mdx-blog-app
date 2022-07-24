@@ -7,13 +7,17 @@ import createContext from '../../../server/context';
 import appRouter from '../../../server/routers/_app';
 
 //Todo: make cors work may be try cors library
-const withCors = (handler: NextApiHandler) => {
-    return async (req: NextApiRequest, res: NextApiResponse) => {
+const withCors = (handler:NextApiHandler) => {
+    return async (req:NextApiRequest, res:NextApiResponse) => {
         await NextCors(req, res, {
-        });
-        return handler(req, res);
-    };
-};
+            // Options
+            methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+            origin: 'https://next-mdx-notes-app.vercel.app/',
+            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+         });
+         return handler(req, res);
+    }
+}
 
 //Todo: try this after some time if cors still not working, figure something out
-export default withCors(withSessionRoute(trpcNext.createNextApiHandler({ router: appRouter, createContext })));
+export default withCors(withSessionRoute(trpcNext.createNextApiHandler({ router: appRouter, createContext})));
