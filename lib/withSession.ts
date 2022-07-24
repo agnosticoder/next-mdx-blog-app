@@ -1,10 +1,11 @@
+import { IronSessionOptions } from 'iron-session';
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
 import { GetServerSideProps, NextApiHandler, NextApiRequest} from 'next';
 
 export const { NODE_ENV = 'develoment', PASSWORD = 'secret', NAME = 'mdx-notes-app' } = process.env;
 const IN_PROD = NODE_ENV === 'production';
 
-const LOGIN_SESS_OPTIONS = {
+const LOGIN_SESS_OPTIONS: IronSessionOptions = {
     cookieName: NAME,
     password: PASSWORD,
     cookieOptions: {
@@ -15,7 +16,7 @@ const LOGIN_SESS_OPTIONS = {
         // expires,
         // maxAge,
         // path,
-        // sameSite,
+        sameSite: "none"
     },
     // ttl
 };
