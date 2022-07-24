@@ -10,10 +10,6 @@ import appRouter from '../../../server/routers/_app';
 const withCors = (handler: NextApiHandler) => {
     return async (req: NextApiRequest, res: NextApiResponse) => {
         await NextCors(req, res, {
-            // Options
-            methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-            origin: 'https://next-mdx-notes-app.vercel.app',
-            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
         return handler(req, res);
     };
