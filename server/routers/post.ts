@@ -107,6 +107,10 @@ const postRouter = createRouter()
                     where: {
                         id: postId,
                     },
+                    include: {
+                        _count: { select: { likedBy: true } },
+                        likedBy: { select: { id: true } },
+                    }
                 });
                 const result = post && await serializeDataToMDX<typeof post>(post);
                 return result;
