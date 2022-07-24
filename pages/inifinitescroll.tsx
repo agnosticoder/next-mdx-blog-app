@@ -25,7 +25,7 @@ const InifiniteScroll = () => {
             {data?.pages.map((page, i) =>
                 page.map((post, j) => (
                     <div key={j}>
-                        <MDXRemote {...post.content as any} components={MDXComponents as any} />
+                        <div>{post.title}</div>
                     </div>
                 ))
             )}

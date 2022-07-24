@@ -10,8 +10,8 @@ const App = () => {
     return (
         <div>
             {error && <h3>{error}</h3>}
-            <AddTodoForm identifier='CREATE'/>
-            {todos?.map((todo) => <Post key={todo.id} {...todo} />)}
+            <AddTodoForm/>
+            {/* {todos?.map((todo) => <Post key={todo.id} {...todo} />)} */}
         </div>
     );
 };

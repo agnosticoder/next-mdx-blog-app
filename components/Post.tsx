@@ -3,7 +3,6 @@ import { useState } from 'react';
 import NotesDropdown from './NotesDropdown';
 import {MdCloudUpload} from 'react-icons/md';
 import EditNoteModal from './EditNoteModal';
-import LikeButton from './LikeButton';
 import { trpc } from '../utils/trpc';
 import MDXComponents from './MDXComponents';
 
@@ -80,14 +79,6 @@ const Post = ({ ...todo }: Todo) => {
                             <MdCloudUpload className={`${isDone ? 'text-blue-400' : 'text-blue-400/50'}`} />
                         </label>
                     </div>
-                    {isDone && (
-                        <LikeButton
-                            totalLikes={todo._count.likedBy}
-                            userId={todo.autherId}
-                            postId={todo.id}
-                            likedByIds={todo.likedBy.map((id) => id.id)}
-                        />
-                    )}
                     <div className='text-base inline-block text-pink-500 list-none'>
                         <li>{new Date(Number(createdAt)).toDateString()}</li>
                     </div>
