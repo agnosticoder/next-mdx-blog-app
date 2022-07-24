@@ -12,11 +12,12 @@ const withCors = (handler:NextApiHandler) => {
         await NextCors(req, res, {
             // Options
             methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-            origin: '*',
+            origin: 'https://next-mdx-notes-app.vercel.app/',
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
          });
          return handler(req, res);
     }
 }
 
+//Todo: try this after some time if cors still not working, figure something out
 export default withCors(withSessionRoute(trpcNext.createNextApiHandler({ router: appRouter, createContext})));
