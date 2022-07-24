@@ -12,9 +12,9 @@ const LOGIN_SESS_OPTIONS: IronSessionOptions = {
         secure: IN_PROD,
         httpOnly: IN_PROD,
         sameSite: "none",
-        maxAge: 1000 * 60 * 60 * 2
+        maxAge: 1000 * 60 * 60 * 2,
+        path: '/',
     },
-    // ttl
 };
 
 declare module 'iron-session' {
