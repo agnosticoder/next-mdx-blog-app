@@ -14,7 +14,7 @@ const withCors = (handler:NextApiHandler) => {
             // Options
             methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
             //? : change this later maybe
-            origin: 'https://next-mdx-notes-app.vercel.app',
+            origin: 'https://next-mdx-blog-app.vercel.app',
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
             credentials: true,
          });
