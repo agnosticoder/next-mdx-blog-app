@@ -9,4 +9,5 @@
 - Comments functionality is work in progress
 - Next.js, Typescript, Sass, Prisma, React Query, MySQL, Trpc etc. have been used as primary technologies for the making of this app
 
-*Soon the video will be added to this page explaining the working of the app*
+## Watch this video showing the workflow of the app
+[![Video](http://img.youtube.com/vi/3nCj5252APo/0.jpg)](http://www.youtube.com/watch?v=3nCj5252APo)
