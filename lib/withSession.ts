@@ -11,7 +11,6 @@ const LOGIN_SESS_OPTIONS: IronSessionOptions = {
     cookieOptions: {
         secure: IN_PROD,
         httpOnly: IN_PROD,
-        sameSite: IN_PROD ? 'none' : 'lax',
         maxAge: 1000 * 60 * 60 * 2,
     },
 };
