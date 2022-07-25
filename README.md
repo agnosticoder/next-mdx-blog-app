@@ -7,6 +7,6 @@
 - Authentication has been implemented using session-based auth
 - Uses can like the post
 - Comments functionality is work in progress
-- Next.js, Typescript, Sass, Prisma, React Query, MySQL, etc. have been used as primary technologies for the making of this app
+- Next.js, Typescript, Sass, Prisma, React Query, MySQL, Trpc etc. have been used as primary technologies for the making of this app
 
 *Soon the video will be added to this page explaining the working of the app*
