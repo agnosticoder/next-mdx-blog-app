@@ -21,6 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 export default withTRPC<AppRouter>({
     config: ({ctx}) => {
+        //? : change the url with env variable maybe
         const url = process.env.NEXT_PUBLIC_VERCEL_URL ? `https://next-mdx-notes-app.vercel.app/api/trpc` : 'http://localhost:3000/api/trpc';
 
         return {
