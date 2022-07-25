@@ -1,4 +1,4 @@
-[`visit the live app ↗`](https://next-mdx-notes-app.vercel.app/)
+[`visit the live app ↗`](https://next-mdx-blog-app.vercel.app/)
 
 # Markdown Blogging Platform
 - This is a blogging platform where one can write blogs in Markdown and publish it or save as draft.
