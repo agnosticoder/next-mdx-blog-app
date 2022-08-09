@@ -1,8 +1,5 @@
 [`visit the live app ↗`](https://next-mdx-notes-app.vercel.app/)
 
-## Watch this video showing the workflow of the app
-[![Video](http://img.youtube.com/vi/3nCj5252APo/0.jpg)](http://www.youtube.com/watch?v=3nCj5252APo)
-
 # Markdown Blogging Platform
 - This is a blogging platform where one can write blogs in Markdown and publish it or save-as draft
 - A Blog post or draft can be edited by going to the dashboard page and can also be deleted
