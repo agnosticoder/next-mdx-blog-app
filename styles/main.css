@@ -4,6 +4,7 @@
 
 @import "tailwindcss/components";
 @import "./post.css";
+@import "./nprogress.css";
 
 @import "tailwindcss/utilities";
 /* @import "./custom-utilities.css"; */
