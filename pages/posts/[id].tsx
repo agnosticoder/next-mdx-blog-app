@@ -57,10 +57,8 @@ const Post = () => {
                     </div>
                 ) : (
                     <div className="flex gap-2 items-center">
-                        <Link href="/login">
-                            <a>
+                        <Link href="/login" passHref>
                                 <AiOutlineHeart size={30} className="text-red-500/70" />
-                            </a>
                         </Link>
                         <span className="text-sm">{post?._count.likedBy}</span>
                     </div>

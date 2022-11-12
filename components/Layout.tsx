@@ -31,10 +31,8 @@ const Layout = ({ children }: { children: ReactElement }) => {
             <header className="fixed top-0 w-full h-16 bg-stone-100 text-teal-700 z-10 drop-shadow">
                 <div className="relative flex justify-between items-center h-full w-11/12 sm:max-w-7xl mx-auto">
                     <div>
-                        <Link href="/">
-                            <a>
+                        <Link href="/" passHref>
                                 <Logo />
-                            </a>
                         </Link>
                     </div>
                     {path !== '/user/post/create' && user && (
@@ -47,8 +45,7 @@ const Layout = ({ children }: { children: ReactElement }) => {
                                 </Link>
                             </li> */}
                                 <li>
-                                    <Link href="/user/post/create">
-                                        <a className="hover:bg-stone-300/30 p-2 rounded">Create Post</a>
+                                    <Link href="/user/post/create" className="hover:bg-stone-300/30 p-2 rounded">Create Post
                                     </Link>
                                 </li>
                                 {/* <li>
@@ -74,8 +71,7 @@ const Layout = ({ children }: { children: ReactElement }) => {
                                                 active ? 'bg-teal-800 text-stone-100' : 'bg-transparent'
                                             }`}
                                         >
-                                            <Link href={`/user/dashboard`}>
-                                                <a className="block px-4 py-2">Dashboard</a>
+                                            <Link href={`/user/dashboard`} className="block px-4 py-2">Dashboard
                                             </Link>
                                         </div>
                                     )}
@@ -88,8 +84,7 @@ const Layout = ({ children }: { children: ReactElement }) => {
                                                 active ? 'bg-teal-800 text-stone-100' : 'bg-transparent'
                                             }`}
                                         >
-                                            <Link href={`/user/post/create`}>
-                                                <a className="block px-4 py-2">Create Post</a>
+                                            <Link href={`/user/post/create`} className="block px-4 py-2">Create Post
                                             </Link>
                                         </div>
                                     )}
@@ -115,15 +110,12 @@ const Layout = ({ children }: { children: ReactElement }) => {
                     {!user && (
                         <ul className="w-52 flex justify-end items-center gap-2">
                             <li>
-                                <Link href="/login">
-                                    <a className="hover:bg-stone-300/30 hover:drop-shadow p-2 rounded">Login</a>
+                                <Link href="/login" className="hover:bg-stone-300/30 hover:drop-shadow p-2 rounded">Login
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/signup">
-                                    <a className="bg-teal-600 text-stone-100 hover:bg-teal-800 hover:drop-shadow p-2 rounded">
+                                <Link href="/signup" className="bg-teal-600 text-stone-100 hover:bg-teal-800 hover:drop-shadow p-2 rounded">
                                         Sign up
-                                    </a>
                                 </Link>
                             </li>
                         </ul>

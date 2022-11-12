@@ -97,8 +97,7 @@ const Signup = () => {
                     {error?.data?.code === 'BAD_REQUEST' && (
                         <div>
                             <span className='inline-block mr-2'>{error.message}</span>
-                            <Link href="/login">
-                                <a className="text-teal-700 hover:underline inline-block"> login</a>
+                            <Link href="/login" className="text-teal-700 hover:underline inline-block"> login
                             </Link>
                         </div>
                     )}

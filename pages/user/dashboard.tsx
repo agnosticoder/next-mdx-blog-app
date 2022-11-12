@@ -39,8 +39,7 @@ const Dashboard = () => {
                                 <div className="col-span-1">
                                     <div className="h-full flex gap-4 font-extralight text-sm justify-end items-center">
                                         <div>
-                                            <Link href={post.isDone ? `/user/post/edit/${post.id}`: `/user/post/edit/draft/${post.id}`}>
-                                                <a className="inline-block hover:bg-stone-200/80 px-2 py-1 rounded">Edit</a>
+                                            <Link href={post.isDone ? `/user/post/edit/${post.id}`: `/user/post/edit/draft/${post.id}`} className="inline-block hover:bg-stone-200/80 px-2 py-1 rounded">Edit
                                             </Link>
                                             {!post.isDone && (
                                                 <button className="ml-2 bg-teal-700 hover:bg-teal-800 text-stone-100 px-2 py-1 rounded"
