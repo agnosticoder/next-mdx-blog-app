@@ -81,10 +81,8 @@ const CreatePostForm = () => {
                         </button>
                     </div>
                     <div>
-                        <Link href={'/'}>
-                            <a className="inline-block bg-stone-500 hover:bg-stone-700 text-white font-bold py-2 px-4 rounded">
+                        <Link href={'/'} className='inline-block bg-stone-500 hover:bg-stone-700 text-white font-bold py-2 px-4 rounded'>
                                 Dismiss
-                            </a>
                         </Link>
                     </div>
                 </div>

@@ -91,10 +91,8 @@ const EditDraftForm = ({id, title, content}: {id: string, title?: string, conten
                         </button>
                     </div>
                     <div>
-                        <Link href={'/user/dashboard'}>
-                            <a className="inline-block bg-stone-500 hover:bg-stone-700 text-white font-bold py-2 px-4 rounded">
+                        <Link href={'/user/dashboard'} className="inline-block bg-stone-500 hover:bg-stone-700 text-white font-bold py-2 px-4 rounded">
                                 Dismiss
-                            </a>
                         </Link>
                         <button
                         onClick={() => onDeletePost({postId: id})}

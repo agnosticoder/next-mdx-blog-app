@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 import { HTMLProps, ReactNode } from "react";
 
 const Heading1 = ({ children }: { children: string }) => (
@@ -80,8 +80,7 @@ const CustomLink = ({children, href, ...props}:HTMLProps<HTMLAnchorElement>) => 
   
     if (isInternalLink) {
       return (
-        <Link href={href}>
-          <a className="text-base cursor-pointer hover:underline text-yellow-400" {...props}>{children}</a>
+        <Link href={href} className="text-base cursor-pointer hover:underline text-yellow-400" {...props}>{children}
         </Link>
       );
     }

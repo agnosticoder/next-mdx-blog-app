@@ -54,8 +54,7 @@ const Dashboard = () => {
                                     <div>{format(post.createdAt, 'dd MMM yyyy')}</div>
                                 </div>
                             </div>
-                            <Link href={`/posts/${post.id}`}>
-                                <a className="block text-3xl font-semibold mb-2">{post.title}</a>
+                            <Link href={`/posts/${post.id}`} className="block text-3xl font-semibold mb-2">{post.title}
                             </Link>
                             {user ? (
                                 <div className="flex gap-2 items-center">
@@ -82,9 +81,7 @@ const Dashboard = () => {
                             ) : (
                                 <div className="flex gap-2 items-center">
                                     <Link href="/login">
-                                        <a>
                                             <AiOutlineHeart size={20} className="text-red-500/70" />
-                                        </a>
                                     </Link>
                                     <span className="text-sm">{post._count.likedBy}</span>
                                 </div>
