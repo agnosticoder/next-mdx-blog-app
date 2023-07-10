@@ -31,8 +31,10 @@ const Layout = ({ children }: { children: ReactElement }) => {
             <header className="fixed top-0 w-full h-16 bg-stone-100 text-teal-700 z-10 drop-shadow">
                 <div className="relative flex justify-between items-center h-full w-11/12 sm:max-w-7xl mx-auto">
                     <div>
-                        <Link href="/">
+                        <Link href="/" passHref>
+                            <a>
                                 <Logo />
+                            </a>
                         </Link>
                     </div>
                     {path !== '/user/post/create' && user && (
