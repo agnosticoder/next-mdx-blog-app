@@ -80,13 +80,13 @@ const CustomLink = ({children, href, ...props}:any) => {
 
     // console.log('href:', href);
   
-    if (isInternalLink) {
-        return (
-            <Link href={href} className="text-base cursor-pointer hover:underline text-yellow-400" {...props}>
-                {children}
-            </Link>
-        );
-    }
+    //Todo: Fix the Type error for following commented block
+    // if (isInternalLink) {
+    //   return (
+    //     <Link href={href} className="text-base cursor-pointer hover:underline text-yellow-400" {...props}>{children}
+    //     </Link>
+    //   );
+    // }
 
     return <a className="text-base cursor-pointer hover:underline text-blue-400" target="_blank" rel="noopener noreferrer" {...props}>{children}</a>;
 };
