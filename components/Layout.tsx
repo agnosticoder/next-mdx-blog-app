@@ -32,9 +32,7 @@ const Layout = ({ children }: { children: ReactElement }) => {
                 <div className="relative flex justify-between items-center h-full w-11/12 sm:max-w-7xl mx-auto">
                     <div>
                         <Link href="/">
-                            <a>
                                 <Logo />
-                            </a>
                         </Link>
                     </div>
                     {path !== '/user/post/create' && user && (

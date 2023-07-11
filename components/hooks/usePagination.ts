@@ -1,25 +1,37 @@
-import { useEffect } from 'react';
-import { trpc } from '../../utils/trpc';
+import { useEffect, useState } from 'react';
 import useInView from './useInView';
+import { FetchPaginatedPostsProps, PaginationPosts } from '../../lib/post';
+import { fetchPaginatedPostsAction } from '../../app/appDir/_actions';
 
-const usePagination = () => {
-    const { data: user } = trpc.useQuery(['user.get'], { ssr: false });
-    const { inView, elementRef } = useInView({ threshold: 1 });
-    const { data: posts, fetchNextPage, hasNextPage, isFetchingNextPage } = trpc.useInfiniteQuery(
-        ['post.paginated', {}],
-        {
-            getNextPageParam: (lastPage) => lastPage[lastPage.length - 1]?.id || undefined,
+const usePagination = ({initialPosts}:{initialPosts: PaginationPosts}) => {
+    const [fetching, setFetching] = useState(false);
+    const [hasNextPage, setHasNextPage] = useState(true);
+    const {inView, elementRef} = useInView({threshold: 1});
+    const [pages, setPages] = useState([initialPosts]);
+    const posts = pages.flatMap(page => page); 
+    const lastCursor = posts[posts.length - 1].id;
+
+     
+    const loadMore = async ({cursor}: FetchPaginatedPostsProps) => {
+        if (!fetching && hasNextPage) {
+            try {
+                setFetching(true)
+                const data = await fetchPaginatedPostsAction({cursor})
+                setPages((prev) => [...prev, data]);
+                if(data.length === 0) setHasNextPage(false)
+            } finally {
+                setFetching(false);
+            }
         }
-    );
-
+    };
 
     useEffect(() => {
-        if (inView && hasNextPage) {
-            fetchNextPage();
+        if(inView && hasNextPage){
+            loadMore({cursor: lastCursor});
         }
-    }, [inView, hasNextPage, fetchNextPage]);
+    }, [hasNextPage, inView, lastCursor])
 
-    return {posts, user, isFetchingNextPage, hasNextPage, elementRef};
+    return {posts, elementRef, fetching, hasNextPage};
 }
 
 export default usePagination;
